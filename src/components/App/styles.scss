@@ -1,5 +1,23 @@
-.app__kek {
-  &:hover {
-    color: #fff;
+.yaps {
+  &__round-btn {
+    background-color: transparent;
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+
+    svg {
+      path {
+        transition: all 0.3s;
+      }
+      &:hover {
+        path:first-child {
+          fill: #454545;
+        }
+        path:last-child {
+          fill: #f54141;
+        }
+      }
+    }
   }
 }
