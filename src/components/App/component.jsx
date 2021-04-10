@@ -1,10 +1,14 @@
 import React, { useEffect, useState } from 'react'
+import { renderToString } from 'react-dom/server'
 import { YMaps, Map, Polygon, Clusterer, Placemark } from 'react-yandex-maps'
 import points from '../../mocks/points'
 import Controls from '../Controls'
 import RountRedCloseIcon from '../svg/RountRedCloseIcon'
+import Circle from '../svg/Circle'
+import circle from '../../assets/img/circle.svg'
 
 import './styles.scss'
+import PlacePoint from '../PlacePoint'
 
 const container = document.createElement('div')
 container.id = 'g-map'
@@ -35,46 +39,65 @@ const App = () => {
   const [state, setState] = useState({
     map: null,
     pol: null,
+    isDrawning: false,
+    isLoading: true,
   })
 
-  const handleAnebleToDraw = () => {
-    const { pol } = state
-    pol.editor.startDrawing()
-  }
+  const handleToDraw = () => {
+    const { pol, isDrawning } = state
 
-  const handleDiableToDraw = () => {
-    const { pol } = state
-    pol.editor.stopDrawing()
+    state.pol.geometry.remove(state.pol)
+
+    if (isDrawning) {
+      pol.editor.stopDrawing()
+    } else {
+      pol.editor.startDrawing()
+    }
   }
 
   const handleRemovepolygon = () => {
     // state.map.geoObjects.removeAll()
-    pol.geometry.remove(state.pol)
+    state.pol.geometry.remove(state.pol)
   }
 
   const init = () => {
     const map = new ymaps.Map('g-map', {
       center: [55.76, 37.64],
-      zoom: 7,
-      controls: [],
+      zoom: 10,
+      controls: ['zoomControl', 'geolocationControl'],
     })
 
-    const clusterer = new ymaps.Clusterer({ clusterDisableClickZoom: true })
+    const clusterer = new ymaps.Clusterer({
+      clusterDisableClickZoom: true,
+      hintContent: 'Москва',
+    })
 
     clusterer.add(
       points.map(
-        (coords) =>
+        (coords, i) =>
           new ymaps.Placemark(
             coords,
             {
-              balloonContent:
-                '<img src="http://img-fotki.yandex.ru/get/6114/82599242.2d6/0_88b97_ec425cf5_M" />',
-              iconContent: 'Азербайджан',
+              balloonContent: renderToString(
+                <img src="http://img-fotki.yandex.ru/get/6114/82599242.2d6/0_88b97_ec425cf5_M" />
+              ),
+              // iconContent: i,
+              hintContent: 'Москва',
+
+              iconContentSize: [40, 40],
             },
             {
-              preset: 'islands#yellowStretchyIcon',
+              iconLayout: ymaps.templateLayoutFactory.createClass(
+                renderToString(<PlacePoint data={{ index: i }} />)
+              ),
+              iconShape: {
+                type: 'Circle',
+                coordinates: [0, 0],
+                radius: 40,
+              },
+
               // Отключаем кнопку закрытия балуна.
-              balloonCloseButton: false,
+              // balloonCloseButton: false,
               // Балун будем открывать и закрывать кликом по иконке метки.
               hideIconOnBalloonOpen: false,
             }
@@ -102,6 +125,7 @@ const App = () => {
 
     stateMonitor.add('drawing', function (newValue) {
       pol.options.set('strokeColor', newValue ? '#FF0000' : '#0000FF')
+      setState((state) => ({ ...state, isDrawning: newValue }))
     })
 
     pol.editor.events.add('statechange', function () {
@@ -126,6 +150,7 @@ const App = () => {
       map: map,
       pol: pol,
       polState: stateMonitor,
+      isLoading: false,
     })
   }
 
@@ -135,10 +160,12 @@ const App = () => {
 
   return (
     <>
-      <Controls
-        handleAnebleToDraw={handleAnebleToDraw}
-        handleDiableToDraw={handleDiableToDraw}
-      />
+      {state.isLoading && (
+        <div className="loader">
+          <div className="span">loading...</div>
+        </div>
+      )}
+      <Controls handleToDraw={handleToDraw} isDrawning={state.isDrawning} />
       <div id="g-map"></div>
       <button className="yaps__round-btn delete" onClick={handleRemovepolygon}>
         <RountRedCloseIcon />

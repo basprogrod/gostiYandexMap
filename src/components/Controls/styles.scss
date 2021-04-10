@@ -4,7 +4,7 @@
   justify-content: flex-end;
   padding-top: 20px;
   padding-right: 20px;
-  width: 100%;
+  right: 0;
   z-index: 1;
 
   button {
@@ -31,6 +31,14 @@
       box-shadow: 0 2px 14px rgb(0, 0, 0, 0.16);
       background: #fff;
       color: #454545;
+    }
+
+    &.invert {
+      background-color: #19a24b;
+      color: #fff;
+      svg path {
+        fill: #fff;
+      }
     }
 
     &.active {

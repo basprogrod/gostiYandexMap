@@ -5,30 +5,21 @@ import MapIcon from '../svg/MapIcon'
 
 import './styles.scss'
 
-const Controls = ({
-  handleAnebleToDraw = () => {},
-  handleDiableToDraw = () => {},
-}) => {
+const Controls = ({ isDrawning, handleToDraw = () => {} }) => {
   return (
     <div className="yaps-controls">
       <button
-        className="yaps-btn yaps-controls__btn"
-        onClick={handleAnebleToDraw}
+        className={`yaps-btn yaps-controls__btn ${isDrawning ? 'invert' : ''}`}
+        onClick={handleToDraw}
       >
         <Edit />
-        <span>Нарисовать область</span>
+        <span>{isDrawning ? 'Закончить рисование' : 'Нарисовать область'}</span>
       </button>
-      <button
-        className="yaps-btn yaps-controls__btn"
-        onClick={handleDiableToDraw}
-      >
+      <button className="yaps-btn yaps-controls__btn">
         <ListIcon />
         <span>Списком</span>
       </button>
-      <button
-        className="yaps-btn yaps-controls__btn active"
-        onClick={handleDiableToDraw}
-      >
+      <button className="yaps-btn yaps-controls__btn active">
         <MapIcon />
         <span>На карте</span>
       </button>
