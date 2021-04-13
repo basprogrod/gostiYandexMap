@@ -9,6 +9,7 @@ import circle from '../../assets/img/circle.svg'
 
 import './styles.scss'
 import PlacePoint from '../PlacePoint'
+import Sidebar from '../Sidebar'
 
 const container = document.createElement('div')
 container.id = 'g-map'
@@ -61,6 +62,8 @@ const App = () => {
   }
 
   const init = () => {
+    // if (window.map) return
+
     const map = new ymaps.Map('g-map', {
       center: [55.76, 37.64],
       zoom: 10,
@@ -75,16 +78,21 @@ const App = () => {
     clusterer.add(
       points.map(
         (coords, i) =>
-          new ymaps.Placemark(
-            coords,
+          new ymaps.GeoObject(
             {
-              balloonContent: renderToString(
-                <img src="http://img-fotki.yandex.ru/get/6114/82599242.2d6/0_88b97_ec425cf5_M" />
-              ),
-              // iconContent: i,
-              hintContent: 'Москва',
+              geometry: {
+                type: 'Point',
+                coordinates: coords,
+              },
+              properties: {
+                balloonContent: renderToString(
+                  <img src="http://img-fotki.yandex.ru/get/6114/82599242.2d6/0_88b97_ec425cf5_M" />
+                ),
+                // iconContent: i,
+                hintContent: 'Москва',
 
-              iconContentSize: [40, 40],
+                // iconContentSize: [40, 40],
+              },
             },
             {
               iconLayout: ymaps.templateLayoutFactory.createClass(
@@ -166,6 +174,7 @@ const App = () => {
         </div>
       )}
       <Controls handleToDraw={handleToDraw} isDrawning={state.isDrawning} />
+      <Sidebar />
       <div id="g-map"></div>
       <button className="yaps__round-btn delete" onClick={handleRemovepolygon}>
         <RountRedCloseIcon />

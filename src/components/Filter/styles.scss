@@ -1,0 +1,137 @@
+.yaps__indicator-separator {
+  display: none;
+}
+.yaps-filter {
+  font-family: Roboto, sans-serif;
+
+  input {
+    height: 32px;
+    border: 2px solid #0002;
+    padding: 0px 8px;
+    border-radius: 4px;
+  }
+
+  &__field {
+    height: 58px;
+    border-bottom: 2px solid #0001;
+    display: flex;
+    align-items: center;
+    // background-color: #5681;
+    justify-content: space-between;
+
+    &.btn {
+      border: none;
+      button {
+        margin-top: auto;
+        background-color: #19a24b;
+        width: 100%;
+        height: 42px;
+        border-radius: 4px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #fff;
+      }
+    }
+  }
+
+  &__filter-title {
+  }
+
+  &__field-price {
+    // font-family: Roboto-Regular;
+    font-size: 12px;
+    margin-left: 12px;
+    padding-right: 4px;
+  }
+
+  &__select {
+    .yaps__control,
+    .yaps__value-container {
+      height: 32px;
+    }
+    .yaps__value-container {
+      align-items: center;
+    }
+  }
+
+  &__city-select {
+    width: 189px;
+    height: 32px;
+  }
+
+  &__type-select {
+    width: 100%;
+
+    .yaps__control {
+      border: none;
+    }
+    .yaps__value-container {
+      padding-left: 0;
+    }
+  }
+
+  &__buttons-set {
+    button {
+      width: 32px;
+      height: 32px;
+      border-radius: 4px;
+      margin-left: 8px;
+
+      &:hover,
+      &.active {
+        background-color: #19a24b;
+        color: #fff;
+      }
+    }
+  }
+
+  &__inputs {
+    input {
+      width: 55px;
+
+      &:first-child {
+        border-top-right-radius: 0;
+        border-bottom-right-radius: 0;
+      }
+
+      &:nth-child(2) {
+        border-top-left-radius: 0;
+        border-bottom-left-radius: 0;
+        margin-left: -2px;
+      }
+    }
+  }
+
+  &__guests-buttons {
+    position: relative;
+    top: 2px;
+    margin-left: 14px;
+    button {
+      background-color: transparent;
+      svg {
+        pointer-events: none;
+      }
+      &:last-child {
+        margin-left: 8px;
+      }
+
+      &:hover {
+        path {
+          stroke: #19a24b;
+        }
+      }
+      &:active {
+        path {
+          stroke: #fff;
+          fill: #19a24b;
+        }
+      }
+    }
+  }
+
+  &__guests-input {
+    width: 56px;
+    margin-left: auto;
+  }
+}
