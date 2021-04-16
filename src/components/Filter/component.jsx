@@ -6,6 +6,8 @@ import './styles.scss'
 import PlusIcon from '../svg/PlusIcon'
 import MinusIcon from '../svg/MinusIcon'
 import SearchIcon from '../svg/SearchIcon'
+import Arrow from '../svg/Arrow'
+import Dropdown from '../Dropdown/component'
 
 const options = [
   { value: 'chocolate', label: 'Chocolate' },
@@ -27,7 +29,24 @@ const Filter = () => {
       to: '',
     },
     guestsNumber: 0,
+    options: [],
   })
+
+  const handleSelectChip = (value) => {
+    const opts = [...state.options]
+    const index = opts.findIndex((el) => el === value)
+
+    if (index < 0) {
+      opts.push(value)
+    } else {
+      opts.splice(index, 1)
+    }
+
+    setState((state) => ({
+      ...state,
+      options: opts,
+    }))
+  }
 
   const handleChoosePrice = (e) => {
     console.log(e.target.value)
@@ -165,6 +184,7 @@ const Filter = () => {
           <span>{dict.filter.SEARCH}</span>
         </button>
       </div>
+      <Dropdown onSelect={handleSelectChip} selectedOptions={state.options} />
     </div>
   )
 }

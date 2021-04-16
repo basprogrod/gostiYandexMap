@@ -2,9 +2,11 @@ import React, { useEffect, useState } from 'react'
 import onGetPosition from '../utils/onGetPosition'
 import onErrorGetPosition from '../utils/onErrorGetPosition'
 
-import './styles.scss'
 import { useDispatch } from 'react-redux'
 import getFiteredData from '../../store/thunks/getFiteredData'
+
+import './styles.scss'
+import Sidebar from '../Sidebar'
 
 const App = () => {
   const dispatch = useDispatch()
@@ -38,7 +40,7 @@ const App = () => {
         </div>
       )}
       {/* <Controls handleToDraw={handleToDraw} isDrawning={state.isDrawning} /> */}
-      {/* <Sidebar /> */}
+      <Sidebar />
       <div id="g-map"></div>
     </>
   )

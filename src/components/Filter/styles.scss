@@ -3,19 +3,22 @@
 }
 .yaps-filter {
   font-family: Roboto, sans-serif;
+  max-height: 95vh;
+  overflow: auto;
 
   input {
     height: 32px;
-    border: 2px solid #0002;
+    border: 1px solid #0002;
     padding: 0px 8px;
     border-radius: 4px;
   }
 
   &__field {
     height: 58px;
-    border-bottom: 2px solid #0001;
+    border-bottom: 1px solid #0001;
     display: flex;
     align-items: center;
+    font-size: 15px;
     // background-color: #5681;
     justify-content: space-between;
 

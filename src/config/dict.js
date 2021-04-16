@@ -7,6 +7,8 @@ export default {
     FROM: 'От',
     TO: 'До',
     GUESTS: 'Гостей',
-    SEARCH: 'Поиск',
+    SEARCH: 'Найти',
+    MORE_OPTIONS: 'Больше параметров',
+    LESS_OPTIONS: 'Спрятать',
   },
 }
