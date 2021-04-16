@@ -1,14 +1,29 @@
 .yaps-dropdown {
   width: 100%;
-  margin-top: 22px;
+  margin-top: 18px;
 
   &__open-btn {
     width: 100%;
+    height: 40px;
     display: flex;
     justify-content: space-between;
+    align-items: center;
+    color: #19a24b;
 
     svg {
       transform: rotate(-90deg);
+      position: relative;
+      left: -4px;
+    }
+
+    &.active {
+      svg {
+        transform: rotate(90deg);
+      }
+    }
+
+    &:hover {
+      opacity: 0.5;
     }
   }
 
@@ -20,6 +35,7 @@
     list-style-type: none;
     height: 0;
     overflow: hidden;
+    transition: all 0.3s;
 
     &.active {
       height: auto;
@@ -46,27 +62,33 @@
   }
 
   &__chip {
+    position: relative;
     display: flex;
     align-items: center;
     height: 32px;
     background: rgba(204, 204, 204, 0.13);
     border-radius: 16px;
-    padding: 0px 15px;
+    padding: 0px 20px;
     margin-right: 8px;
     margin-bottom: 8px;
     color: #454545;
     font-size: 11px;
+    transition: all 0.3s;
 
     &-icon {
-      display: none;
+      opacity: 0;
+      position: absolute;
+      right: 8px;
       margin-left: 8px;
     }
 
     &.active {
+      padding-right: 24px;
+      padding-left: 16px;
       .yaps-dropdown {
         &__chip {
           &-icon {
-            display: block;
+            opacity: 1;
           }
         }
       }

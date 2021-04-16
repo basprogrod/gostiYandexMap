@@ -21,6 +21,16 @@ const options1 = [
   { value: 'vanilla', label: 'Vanilla' },
 ]
 
+const theme = (theme) => ({
+  ...theme,
+  colors: {
+    ...theme.colors,
+    primary25: '#19a24b',
+    primary: '#19a24b',
+    primary50: '#d3ffe3',
+  },
+})
+
 const Filter = () => {
   const [state, setState] = useState({
     roomsValue: '1',
@@ -45,6 +55,13 @@ const Filter = () => {
     setState((state) => ({
       ...state,
       options: opts,
+    }))
+  }
+
+  const handleUnsetChips = () => {
+    setState((state) => ({
+      ...state,
+      options: [],
     }))
   }
 
@@ -97,14 +114,16 @@ const Filter = () => {
           classNamePrefix="yaps"
           options={options}
           defaultValue={options[0]}
+          theme={theme}
         />
       </div>
       <div className="yaps-filter__field">
         <Select
-          className="yaps-filter__type-select yaps-filter__select"
+          className="yaps-filter__type-select"
           classNamePrefix="yaps"
           options={options1}
           defaultValue={options1[0]}
+          theme={theme}
         />
       </div>
       <div className="yaps-filter__field">
@@ -184,7 +203,11 @@ const Filter = () => {
           <span>{dict.filter.SEARCH}</span>
         </button>
       </div>
-      <Dropdown onSelect={handleSelectChip} selectedOptions={state.options} />
+      <Dropdown
+        onSelect={handleSelectChip}
+        selectedOptions={state.options}
+        unsetChips={handleUnsetChips}
+      />
     </div>
   )
 }

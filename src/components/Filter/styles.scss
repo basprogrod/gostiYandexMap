@@ -3,8 +3,17 @@
 }
 .yaps-filter {
   font-family: Roboto, sans-serif;
+  padding: 16px;
   max-height: 95vh;
   overflow: auto;
+  &::-webkit-scrollbar {
+    width: 4px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background-color: #19a24b;
+    border-radius: 9em;
+  }
 
   input {
     height: 32px;
@@ -28,12 +37,31 @@
         margin-top: auto;
         background-color: #19a24b;
         width: 100%;
-        height: 42px;
+        height: 40px;
         border-radius: 4px;
         display: flex;
         align-items: center;
         justify-content: center;
         color: #fff;
+        transition: all 0.3s;
+        border: 1px solid #19a24b;
+
+        span {
+          margin-left: 8px;
+        }
+
+        &:hover {
+          background-color: #fff;
+          color: #19a24b;
+          path {
+            stroke: #19a24b;
+          }
+        }
+
+        &:active {
+          background-color: #19a24b;
+          color: #fff;
+        }
       }
     }
   }
@@ -55,6 +83,11 @@
     }
     .yaps__value-container {
       align-items: center;
+    }
+    .yaps__input {
+      input {
+        height: 100%;
+      }
     }
   }
 
