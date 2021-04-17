@@ -2,11 +2,12 @@
   position: relative;
   width: 40px;
   height: 40px;
-  background-color: #4567;
   cursor: pointer;
   display: flex;
   align-items: center;
+  background-color: transparent;
   justify-content: center;
+  transform: translateX(-50%) translateY(-50%);
 
   &__number {
     position: relative;

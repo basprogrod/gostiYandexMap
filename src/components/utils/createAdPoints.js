@@ -1,13 +1,50 @@
 import React from 'react'
 import { renderToString } from 'react-dom/server'
 import PlacePoint from '../PlacePoint'
+import vio from '../../assets/img/violetCircle.svg'
+import yel from '../../assets/img/yellowCircle.svg'
 
 export default (pointsArray, map) => {
   console.log('-> pointsArray', pointsArray)
   if (!pointsArray.length) return
-  // map.geoObjects.removeAll()
+  map.geoObjects.removeAll()
 
-  pointsArray.forEach((point, i) => {
+  const clusterer = new ymaps.Clusterer({
+    clusterIcons: [
+      {
+        href: yel,
+        size: [40, 40],
+        offset: [-20, -20],
+      },
+      {
+        href: vio,
+        size: [40, 40],
+        offset: [-20, -20],
+      },
+    ],
+
+    clusterNumbers: [2],
+    // clusterIconLayout: 'default#pieChart',
+    /**
+     * Через кластеризатор можно указать только стили кластеров,
+     * стили для меток нужно назначать каждой метке отдельно.
+     * @see https://api.yandex.ru/maps/doc/jsapi/2.1/ref/reference/option.presetStorage.xml
+     */
+    // preset: 'islands#invertedVioletClusterIcons',
+    /**
+     * Ставим true, если хотим кластеризовать только точки с одинаковыми координатами.
+     */
+    groupByCoordinates: false,
+    /**
+     * Опции кластеров указываем в кластеризаторе с префиксом "cluster".
+     * @see https://api.yandex.ru/maps/doc/jsapi/2.1/ref/reference/ClusterPlacemark.xml
+     */
+    clusterDisableClickZoom: true,
+    clusterHideIconOnBalloonOpen: false,
+    geoObjectHideIconOnBalloonOpen: false,
+  })
+
+  const points = pointsArray.map((point, i) => {
     const Template = ymaps.templateLayoutFactory.createClass(
       renderToString(<PlacePoint data={{ index: i }} />)
     )
@@ -21,7 +58,7 @@ export default (pointsArray, map) => {
         },
         // Описываем данные геообъекта.
         properties: {
-          hintContent: 'Москва',
+          hintContent: `${point.price.daily} ${point.price.currency}`,
           balloonContentHeader: 'Москва',
           balloonContentBody: 'Столица России',
           population: 11848762,
@@ -30,6 +67,8 @@ export default (pointsArray, map) => {
       {
         // Задаем пресет метки с точкой без содержимого.
         // preset: 'twirl#redDotIcon',
+        // iconLayout: 'default#image',
+
         iconLayout: Template,
         // Включаем возможность перетаскивания.
         // draggable: true,
@@ -51,8 +90,14 @@ export default (pointsArray, map) => {
       console.log(e)
     })
 
-    map.geoObjects.add(myGeoObject)
+    return myGeoObject
   })
+  clusterer.options.set({
+    gridSize: 100,
+    clusterDisableClickZoom: true,
+  })
+  clusterer.add(points)
+  map.geoObjects.add(clusterer)
 }
 
 // clusterer.add(
