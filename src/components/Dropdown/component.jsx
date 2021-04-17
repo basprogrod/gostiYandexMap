@@ -35,12 +35,7 @@ const chips = [
   // },
 ]
 
-const Dropdown = ({
-  options = chips,
-  onSelect,
-  selectedOptions,
-  unsetChips,
-}) => {
+const Dropdown = ({ options, onSelect, selectedOptions, unsetChips }) => {
   const listRef = useRef(null)
   const [state, setState] = useState({ isOpen: false })
 
@@ -63,23 +58,25 @@ const Dropdown = ({
         ref={listRef}
         className={`yaps-dropdown__list ${state.isOpen ? 'active' : ''}`}
       >
-        {options.map((item, index) => (
-          <li key={index} className="yaps-dropdown__item">
-            <span className="yaps-dropdown__item-title">{item.type}:</span>
+        {options.map((item) => (
+          <li key={item.id} className="yaps-dropdown__item">
+            <span className="yaps-dropdown__item-title">{item.name}:</span>
             <span className="yaps-dropdown__item-chips">
-              {item.items.map((el, index) => {
+              {item.children.map((el, index) => {
                 const handleClick = () => {
-                  onSelect(el)
+                  onSelect(el.id)
                 }
                 return (
                   <button
                     key={index}
                     className={`yaps-dropdown__chip ${
-                      selectedOptions.some((opt) => opt === el) ? 'active' : ''
+                      selectedOptions.some((opt) => opt === el.id)
+                        ? 'active'
+                        : ''
                     }`}
                     onClick={handleClick}
                   >
-                    <span>{el}</span>
+                    <span>{el.name}</span>
                     <CrossIcon className="yaps-dropdown__chip-icon" />
                   </button>
                 )

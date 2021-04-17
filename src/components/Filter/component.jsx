@@ -1,4 +1,5 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 import dict from '../../config/dict'
 import Select from 'react-select'
 import AsyncSelect from 'react-select/async'
@@ -8,12 +9,9 @@ import MinusIcon from '../svg/MinusIcon'
 import SearchIcon from '../svg/SearchIcon'
 import Arrow from '../svg/Arrow'
 import Dropdown from '../Dropdown/component'
-
-const options = [
-  { value: 'chocolate', label: 'Chocolate' },
-  { value: 'strawberry', label: 'Strawberry' },
-  { value: 'vanilla', label: 'Vanilla' },
-]
+import getOptions from '../../store/thunks/getOptions'
+import getFiteredData from '../../store/thunks/getFiteredData'
+import { filterFields } from '../../config/constants'
 
 const options1 = [
   { value: 'chocolate', label: 'Chocolate' },
@@ -31,19 +29,24 @@ const theme = (theme) => ({
   },
 })
 
+const { CITY, TYPE, ROOM_NUMBER, FROM, TO, OPTIONS, VISITORS } = filterFields
+
 const Filter = () => {
+  const dispatch = useDispatch()
+  const { options, cities } = useSelector((state) => state)
+
   const [state, setState] = useState({
-    roomsValue: '1',
-    priceRange: {
-      from: '',
-      to: '',
-    },
-    guestsNumber: 0,
-    options: [],
+    [ROOM_NUMBER]: '1',
+    [FROM]: '',
+    [TO]: '',
+    [TYPE]: '',
+    [VISITORS]: 0,
+    [OPTIONS]: [],
+    [CITY]: '',
   })
 
   const handleSelectChip = (value) => {
-    const opts = [...state.options]
+    const opts = [...state[OPTIONS]]
     const index = opts.findIndex((el) => el === value)
 
     if (index < 0) {
@@ -54,47 +57,43 @@ const Filter = () => {
 
     setState((state) => ({
       ...state,
-      options: opts,
+      [OPTIONS]: opts,
     }))
   }
 
   const handleUnsetChips = () => {
     setState((state) => ({
       ...state,
-      options: [],
+      [OPTIONS]: [],
     }))
   }
 
   const handleChoosePrice = (e) => {
-    console.log(e.target.value)
     if (!/^\d+$|^$/.test(e.target.value)) return
 
     setState({
       ...state,
-      priceRange: {
-        ...state.priceRange,
-        [e.target.dataset.field]: e.target.value,
-      },
+      [e.target.dataset.field]: e.target.value,
     })
   }
 
   const handleButtonChoose = (e) => {
-    setState({ ...state, roomsValue: e.target.dataset.value })
+    setState({ ...state, [ROOM_NUMBER]: e.target.dataset.value })
   }
 
   const handleSetGuestsNumber = (e) => {
     if (state.guestsNumber < 0) {
       setState({
         ...state,
-        guestsNumber: 0,
+        [VISITORS]: 0,
       })
       return
     } else {
       setState({
         ...state,
-        guestsNumber: e.target.dataset.plus
-          ? ++state.guestsNumber
-          : --state.guestsNumber,
+        [VISITORS]: e.target.dataset.plus
+          ? ++state[VISITORS]
+          : --state[VISITORS],
       })
     }
   }
@@ -102,7 +101,16 @@ const Filter = () => {
   const handleChangeGuentsNumber = (e) => {
     console.log(e.target.value)
     if (!/^\d+$|^$/.test(e.target.value)) return
-    setState({ ...state, guestsNumber: +e.target.value })
+    setState({ ...state, [VISITORS]: +e.target.value })
+  }
+
+  const handleCitiesSelectChange = (e) => {
+    console.log(e)
+    setState((state) => ({ ...state, [CITY]: e.value }))
+  }
+
+  const handleSubmifFilter = () => {
+    dispatch(getFiteredData(state))
   }
 
   return (
@@ -112,9 +120,9 @@ const Filter = () => {
         <Select
           className="yaps-filter__city-select yaps-filter__select"
           classNamePrefix="yaps"
-          options={options}
-          defaultValue={options[0]}
+          options={cities}
           theme={theme}
+          onChange={handleCitiesSelectChange}
         />
       </div>
       <div className="yaps-filter__field">
@@ -131,28 +139,28 @@ const Filter = () => {
         <div className="yaps-filter__buttons-set">
           <button
             data-value="1"
-            className={`${state.roomsValue === '1' ? 'active' : ''}`}
+            className={`${state[ROOM_NUMBER] === '1' ? 'active' : ''}`}
             onClick={handleButtonChoose}
           >
             1
           </button>
           <button
             data-value="2"
-            className={`${state.roomsValue === '2' ? 'active' : ''}`}
+            className={`${state[ROOM_NUMBER] === '2' ? 'active' : ''}`}
             onClick={handleButtonChoose}
           >
             2
           </button>
           <button
             data-value="3"
-            className={`${state.roomsValue === '3' ? 'active' : ''}`}
+            className={`${state[ROOM_NUMBER] === '3' ? 'active' : ''}`}
             onClick={handleButtonChoose}
           >
             3
           </button>
           <button
             data-value="4+"
-            className={`${state.roomsValue === '4+' ? 'active' : ''}`}
+            className={`${state[ROOM_NUMBER] === '4+' ? 'active' : ''}`}
             onClick={handleButtonChoose}
           >
             4+
@@ -165,16 +173,16 @@ const Filter = () => {
         <div className="yaps-filter__inputs">
           <input
             type="text"
-            value={state.priceRange.from}
+            value={state[FROM]}
             onChange={handleChoosePrice}
-            data-field="from"
+            data-field={FROM}
             placeholder={dict.filter.FROM}
           />
           <input
             type="text"
-            value={state.priceRange.to}
+            value={state[TO]}
             onChange={handleChoosePrice}
-            data-field="to"
+            data-field={TO}
             placeholder={dict.filter.TO}
           />
           <span className="yaps-filter__field-price">BYN</span>
@@ -185,7 +193,7 @@ const Filter = () => {
         <input
           type="text"
           className="yaps-filter__guests-input"
-          value={state.guestsNumber > 0 ? state.guestsNumber : ''}
+          value={state[VISITORS] > 0 ? state[VISITORS] : ''}
           onChange={handleChangeGuentsNumber}
         />
         <div className="yaps-filter__guests-buttons">
@@ -198,14 +206,15 @@ const Filter = () => {
         </div>
       </div>
       <div className="yaps-filter__field btn">
-        <button>
+        <button onClick={handleSubmifFilter}>
           <SearchIcon />
           <span>{dict.filter.SEARCH}</span>
         </button>
       </div>
       <Dropdown
+        options={options}
         onSelect={handleSelectChip}
-        selectedOptions={state.options}
+        selectedOptions={state[OPTIONS]}
         unsetChips={handleUnsetChips}
       />
     </div>

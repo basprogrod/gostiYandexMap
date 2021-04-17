@@ -11,4 +11,7 @@ export default {
     MORE_OPTIONS: 'Больше параметров',
     LESS_OPTIONS: 'Спрятать',
   },
+  webInteraction: {
+    INDEFINIT_ERROR: 'Что-то пошло не так!',
+  },
 }

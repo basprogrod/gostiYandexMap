@@ -7,6 +7,8 @@ import getFiteredData from '../../store/thunks/getFiteredData'
 
 import './styles.scss'
 import Sidebar from '../Sidebar'
+import getOptions from '../../store/thunks/getOptions'
+import getCities from '../../store/thunks/getCities'
 
 const App = () => {
   const dispatch = useDispatch()
@@ -29,7 +31,8 @@ const App = () => {
   }, [])
 
   useEffect(() => {
-    dispatch(getFiteredData())
+    dispatch(getOptions())
+    dispatch(getCities())
   }, [])
 
   return (
