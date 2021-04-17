@@ -1,10 +1,11 @@
+import { CACH_KEEPING_TIME } from '../../config/constants'
 import { storage } from './storageService'
 
 export default (state, setState, e) => {
   console.log('-> e', e)
   const { center, zoom, ts } = storage.get()
 
-  if (new Date().getTime() - ts > 5000) storage.clear()
+  if (new Date().getTime() - ts > CACH_KEEPING_TIME) storage.clear()
 
   const map = new ymaps.Map('g-map', {
     center: center || [e.coords.latitude, e.coords.longitude],
@@ -28,5 +29,6 @@ export default (state, setState, e) => {
   setState({
     ...state,
     isLoading: false,
+    map: map,
   })
 }

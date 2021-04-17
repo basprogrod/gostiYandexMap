@@ -1,5 +1,6 @@
 import React from 'react'
 import Circle from '../svg/Circle'
+import circle from '../../assets/img/circle.svg'
 
 import './styles.scss'
 
@@ -8,7 +9,8 @@ const PlacePoint = ({ data }) => {
     <div className="yaps-placemarck" onMouseOver={() => console.log(123)}>
       <span className="yaps-placemarck__number">{data.index}</span>
       <span className="yaps-placemarck__image">
-        <Circle />
+        {/* <Circle /> */}
+        <img src={circle} alt="" />
       </span>
     </div>
   )

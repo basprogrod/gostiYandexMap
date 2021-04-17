@@ -2,6 +2,7 @@ import { storage } from './storageService'
 
 export default (state, setState, e) => {
   const { center, zoom, ts } = storage.get()
+  if (new Date().getTime() - ts > CACH_KEEPING_TIME) storage.clear()
 
   const map = new ymaps.Map('g-map', {
     center: center || [53.901614, 27.556883],

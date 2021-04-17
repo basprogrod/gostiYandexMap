@@ -3,6 +3,7 @@ import actionsTypes from './actionsTypes'
 const initState = {
   options: [],
   cities: [],
+  ads: [],
 }
 
 export default (state = initState, { type, payload }) => {
@@ -16,6 +17,11 @@ export default (state = initState, { type, payload }) => {
       return {
         ...state,
         cities: payload,
+      }
+    case actionsTypes.SET_ADS:
+      return {
+        ...state,
+        ads: payload,
       }
 
     default:

@@ -9,3 +9,8 @@ export const actionSetCities = (payload) => ({
   type: actionsTypes.SET_CITIES,
   payload,
 })
+
+export const actionSetAds = (payload) => ({
+  type: actionsTypes.SET_ADS,
+  payload,
+})
