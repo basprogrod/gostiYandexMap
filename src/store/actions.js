@@ -14,3 +14,8 @@ export const actionSetAds = (payload) => ({
   type: actionsTypes.SET_ADS,
   payload,
 })
+
+export const actionSetTypes = (payload) => ({
+  type: actionsTypes.SET_TYPES,
+  payload,
+})

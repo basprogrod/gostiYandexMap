@@ -7,6 +7,7 @@ import { Provider } from 'react-redux'
 import App from './components/App'
 import store from './store'
 
+import './slick.css'
 import './styles.scss'
 
 ReactDOM.render(
@@ -15,10 +16,3 @@ ReactDOM.render(
   </Provider>,
   document.getElementById('yaps')
 )
-
-const arr = []
-for (let i = 0; i < 9; i++) {
-  arr.push([i])
-}
-
-console.log(arr)

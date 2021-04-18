@@ -14,4 +14,9 @@ export default {
   webInteraction: {
     INDEFINIT_ERROR: 'Что-то пошло не так!',
   },
+
+  widget: {
+    BUTTON: 'Показать телефон',
+    BACK_TO_FILTERS_BUTTON: 'Назад к фильтрам',
+  },
 }

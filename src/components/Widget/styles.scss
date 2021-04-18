@@ -1,0 +1,55 @@
+.yaps-widget {
+  padding: 16px;
+  font-family: Roboto, sans-serif;
+
+  &__slide {
+    height: 158px;
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+  }
+  .slick-slider {
+    margin-bottom: 14px;
+  }
+  .slick-dots li button:before {
+    display: none;
+  }
+  .slick-dots {
+    bottom: 4px;
+    li {
+      background-color: #fff;
+      opacity: 0.3;
+      height: 9px;
+      width: 9px;
+      border-radius: 50%;
+
+      &.slick-active {
+        opacity: 1;
+      }
+    }
+  }
+  &__to-fav-btn {
+    height: 24px;
+    color: #9f9f9f;
+    font-size: 12px;
+    display: flex;
+    align-items: center;
+    span {
+      height: 24px;
+      width: 24px;
+      border-radius: 50%;
+      background: rgba(212, 212, 212, 0.41);
+      opacity: 0.6;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-right: 9px;
+    }
+  }
+  &__field {
+    display: flex;
+    justify-content: space-between;
+  }
+}

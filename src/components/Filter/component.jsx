@@ -13,12 +13,6 @@ import getOptions from '../../store/thunks/getOptions'
 import getFiteredData from '../../store/thunks/getFiteredData'
 import { filterFields } from '../../config/constants'
 
-const options1 = [
-  { value: 'chocolate', label: 'Chocolate' },
-  { value: 'strawberry', label: 'Strawberry' },
-  { value: 'vanilla', label: 'Vanilla' },
-]
-
 const theme = (theme) => ({
   ...theme,
   colors: {
@@ -33,13 +27,13 @@ const { CITY, TYPE, ROOM_NUMBER, FROM, TO, OPTIONS, VISITORS } = filterFields
 
 const Filter = () => {
   const dispatch = useDispatch()
-  const { options, cities } = useSelector((state) => state)
+  const { options, cities, types } = useSelector((state) => state)
 
   const [state, setState] = useState({
     [ROOM_NUMBER]: '1',
     [FROM]: '',
     [TO]: '',
-    [TYPE]: '',
+    [TYPE]: 'flat',
     [VISITORS]: 0,
     [OPTIONS]: [],
     [CITY]: '',
@@ -108,6 +102,10 @@ const Filter = () => {
     console.log(e)
     setState((state) => ({ ...state, [CITY]: e.value }))
   }
+  const handleTypesSelectChange = (e) => {
+    console.log(e)
+    setState((state) => ({ ...state, [TYPE]: e.value }))
+  }
 
   const handleSubmifFilter = () => {
     dispatch(getFiteredData(state))
@@ -121,6 +119,7 @@ const Filter = () => {
           className="yaps-filter__city-select yaps-filter__select"
           classNamePrefix="yaps"
           options={cities}
+          defaultValue={cities[0]}
           theme={theme}
           onChange={handleCitiesSelectChange}
         />
@@ -129,9 +128,10 @@ const Filter = () => {
         <Select
           className="yaps-filter__type-select"
           classNamePrefix="yaps"
-          options={options1}
-          defaultValue={options1[0]}
+          options={types}
           theme={theme}
+          defaultValue={types[0]}
+          onChange={handleTypesSelectChange}
         />
       </div>
       <div className="yaps-filter__field">

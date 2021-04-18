@@ -19,6 +19,8 @@ const App = () => {
   const [state, setState] = useState({
     map: null,
     isLoading: true,
+    adsToShow: [],
+    points: [],
   })
 
   const init = () => {
@@ -36,11 +38,13 @@ const App = () => {
     dispatch(getOptions())
     dispatch(getCities())
     dispatch(getAdTypes())
+    // dispatch(getFiteredData({}))
   }, [])
 
   useEffect(() => {
     if (!ads.length) return
-    createAdPoints(ads, state.map)
+    console.log('ads', ads)
+    createAdPoints(ads, state, setState)
   }, [ads])
 
   return (

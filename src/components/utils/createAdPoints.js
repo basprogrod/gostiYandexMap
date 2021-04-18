@@ -3,11 +3,16 @@ import { renderToString } from 'react-dom/server'
 import PlacePoint from '../PlacePoint'
 import vio from '../../assets/img/violetCircle.svg'
 import yel from '../../assets/img/yellowCircle.svg'
+import logo from '../../assets/img/logoIcon.svg'
+import circle from '../../assets/img/circle.svg'
 
-export default (pointsArray, map) => {
-  console.log('-> pointsArray', pointsArray)
+let placemarks = []
+
+export default (pointsArray, state, setState) => {
+  const { map, points } = state
+
   if (!pointsArray.length) return
-  map.geoObjects.removeAll()
+  map?.geoObjects.removeAll()
 
   const clusterer = new ymaps.Clusterer({
     clusterIcons: [
@@ -24,27 +29,15 @@ export default (pointsArray, map) => {
     ],
 
     clusterNumbers: [2],
-    // clusterIconLayout: 'default#pieChart',
-    /**
-     * Через кластеризатор можно указать только стили кластеров,
-     * стили для меток нужно назначать каждой метке отдельно.
-     * @see https://api.yandex.ru/maps/doc/jsapi/2.1/ref/reference/option.presetStorage.xml
-     */
-    // preset: 'islands#invertedVioletClusterIcons',
-    /**
-     * Ставим true, если хотим кластеризовать только точки с одинаковыми координатами.
-     */
     groupByCoordinates: false,
-    /**
-     * Опции кластеров указываем в кластеризаторе с префиксом "cluster".
-     * @see https://api.yandex.ru/maps/doc/jsapi/2.1/ref/reference/ClusterPlacemark.xml
-     */
     clusterDisableClickZoom: true,
     clusterHideIconOnBalloonOpen: false,
     geoObjectHideIconOnBalloonOpen: false,
+    hasBalloon: false,
+    hint: 'kek',
   })
 
-  const points = pointsArray.map((point, i) => {
+  placemarks = pointsArray.map((point, i) => {
     const Template = ymaps.templateLayoutFactory.createClass(
       renderToString(<PlacePoint data={{ index: i }} />)
     )
@@ -59,45 +52,86 @@ export default (pointsArray, map) => {
         // Описываем данные геообъекта.
         properties: {
           hintContent: `${point.price.daily} ${point.price.currency}`,
-          balloonContentHeader: 'Москва',
-          balloonContentBody: 'Столица России',
-          population: 11848762,
+          iconContent: renderToString(
+            <div className="yaps__icon-content">1</div>
+          ),
+          indexToShow: i,
+          // balloonContentHeader: 'Москва',
+          // balloonContentBody: 'Столица России',
+          // population: 11848762,
+          // iconImageSize: [40, 40],
         },
       },
       {
         // Задаем пресет метки с точкой без содержимого.
         // preset: 'twirl#redDotIcon',
-        // iconLayout: 'default#image',
+        iconLayout: 'default#imageWithContent',
+        iconImageHref: circle,
 
-        iconLayout: Template,
+        // iconImageOffset: [-20, -20],
+        // iconContentOffset: [4, 5],
+        hasBalloon: false,
+        // iconLayout: Template,
         // Включаем возможность перетаскивания.
         // draggable: true,
         // Переопределяем макет содержимого нижней части балуна.
-        balloonContentFooterLayout: ymaps.templateLayoutFactory.createClass(
-          'население: $[properties.population], координаты: $[geometry.coordinates]'
-        ),
+        // balloonContentFooterLayout: ymaps.templateLayoutFactory.createClass(
+        //   'население: $[properties.population], координаты: $[geometry.coordinates]'
+        // ),
         iconShape: {
           type: 'Circle',
           coordinates: [0, 0],
-          radius: 40,
+          radius: 20,
         },
         // Отключаем задержку закрытия всплывающей подсказки.
         hintHideTimeout: 0,
       }
     )
 
+    myGeoObject.options.set('iconImageSize', [40, 40])
+    myGeoObject.options.set('iconImageHref', circle)
+    myGeoObject.options.set('iconImageOffset', [-20, -20])
+    myGeoObject.options.set('iconContentOffset', [4, 5])
+
     myGeoObject.events.add('click', (e) => {
-      console.log(e)
+      for (const point of placemarks) {
+        point.options.set('iconImageHref', circle)
+        point.options.set('iconLayout', 'default#imageWithContent')
+      }
+
+      e.get('target').options.set('iconLayout', 'default#image')
+      // e.get('target').options.set('iconImageSize', [40, 40])
+      // e.get('target').options.set('iconImageOffset', [-20, -20])
+      // e.get('target').options.set('iconContentOffset', [15, 15])
+      e.get('target').options.set('iconImageHref', logo)
     })
 
     return myGeoObject
   })
+
   clusterer.options.set({
     gridSize: 100,
     clusterDisableClickZoom: true,
   })
-  clusterer.add(points)
-  map.geoObjects.add(clusterer)
+  clusterer.add(placemarks)
+  clusterer.events.add('click', (e) => {
+    console.log(e.get('target'))
+    if (e.get('target').getGeoObjects) {
+      const adsToShow = e
+        .get('target')
+        .getGeoObjects()
+        .map((obj) => obj.properties._data.indexToShow)
+      setState({ ...state, adsToShow })
+    } else {
+    }
+
+    e.get('target').options.set('iconLayout', 'default#image')
+    // e.get('target').options.set('iconImageSize', [40, 40])
+    // e.get('target').options.set('iconImageOffset', [-20, -20])
+    // e.get('target').options.set('iconContentOffset', [15, 15])
+    e.get('target').options.set('iconImageHref', logo)
+  })
+  map?.geoObjects.add(clusterer)
 }
 
 // clusterer.add(

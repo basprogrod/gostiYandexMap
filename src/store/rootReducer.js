@@ -4,6 +4,7 @@ const initState = {
   options: [],
   cities: [],
   ads: [],
+  types: [],
 }
 
 export default (state = initState, { type, payload }) => {
@@ -23,7 +24,11 @@ export default (state = initState, { type, payload }) => {
         ...state,
         ads: payload,
       }
-
+    case actionsTypes.SET_TYPES:
+      return {
+        ...state,
+        types: payload,
+      }
     default:
       return state
   }

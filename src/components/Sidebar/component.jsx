@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import arrow from '../../assets/img/arrow.svg'
 import Filter from '../Filter'
+import Widget from '../Widget'
 
 import './styles.scss'
 
@@ -22,6 +23,8 @@ const Sidebar = () => {
       </button>
 
       <Filter />
+
+      {/* <Widget /> */}
     </div>
   )
 }

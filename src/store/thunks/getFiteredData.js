@@ -15,8 +15,12 @@ export default (state) => async (dispatch) => {
   const query = qs.stringify(fields)
 
   try {
-    const res = await axios.get(`${API_URL}/map-by-name?type=flat&${query}`)
-    console.log('-> res', res)
+    await new Promise((res) => setTimeout(() => res(), 2000))
+
+    const res = await axios.get(
+      `${API_URL}/map-by-name?${query}` // TODO
+    )
+    //type=flat&city=Минск
 
     dispatch(actionSetAds(res.data.data))
   } catch (error) {

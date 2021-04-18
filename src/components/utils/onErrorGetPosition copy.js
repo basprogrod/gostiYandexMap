@@ -1,13 +1,10 @@
-import { CACH_KEEPING_TIME } from '../../config/constants'
 import { storage } from './storageService'
 
 export default (state, setState, e) => {
   const { center, zoom, ts } = storage.get()
 
-  if (new Date().getTime() - ts > CACH_KEEPING_TIME) storage.clear()
-
   const map = new ymaps.Map('g-map', {
-    center: center || [e.coords.latitude, e.coords.longitude],
+    center: center || [53.901614, 27.556883],
     zoom: zoom || 10,
     controls: [
       /* 'zoomControl', 'geolocationControl' */
@@ -28,6 +25,6 @@ export default (state, setState, e) => {
   setState({
     ...state,
     isLoading: false,
-    map: map,
   })
+  alert('Пользователь запретил определение места положения')
 }
