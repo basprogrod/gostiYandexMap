@@ -18,7 +18,7 @@ export default (state) => async (dispatch) => {
     await new Promise((res) => setTimeout(() => res(), 2000))
 
     const res = await axios.get(
-      `${API_URL}/map-by-name?${query}` // TODO
+      `${API_URL}/map-by-name?type=flat&city=Минск${query}` // TODO
     )
     //type=flat&city=Минск
 

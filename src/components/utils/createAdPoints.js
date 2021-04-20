@@ -11,31 +11,37 @@ let placemarks = []
 export default (pointsArray, state, setState) => {
   const { map, points } = state
 
-  if (!pointsArray.length) return
-  map?.geoObjects.removeAll()
+  const clIcons = [
+    {
+      href: yel,
+      size: [40, 40],
+      offset: [-20, -20],
+    },
+    {
+      href: vio,
+      size: [40, 40],
+      offset: [-20, -20],
+    },
+  ]
 
-  const clusterer = new ymaps.Clusterer({
-    clusterIcons: [
-      {
-        href: yel,
-        size: [40, 40],
-        offset: [-20, -20],
-      },
-      {
-        href: vio,
-        size: [40, 40],
-        offset: [-20, -20],
-      },
-    ],
-
+  const clOptoins = {
+    clusterIcons: clIcons,
     clusterNumbers: [2],
     groupByCoordinates: false,
     clusterDisableClickZoom: true,
     clusterHideIconOnBalloonOpen: false,
     geoObjectHideIconOnBalloonOpen: false,
     hasBalloon: false,
-    hint: 'kek',
-  })
+    iconLayout: 'default#imageWithContent',
+    iconImageSize: [40, 40],
+    iconImageOffset: [-20, -20],
+    iconContentOffset: [15, 13],
+  }
+
+  if (!pointsArray.length) return
+  map?.geoObjects.removeAll()
+
+  const clusterer = new ymaps.Clusterer(clOptoins)
 
   placemarks = pointsArray.map((point, i) => {
     const Template = ymaps.templateLayoutFactory.createClass(
@@ -93,19 +99,6 @@ export default (pointsArray, state, setState) => {
     myGeoObject.options.set('iconImageOffset', [-20, -20])
     myGeoObject.options.set('iconContentOffset', [4, 5])
 
-    myGeoObject.events.add('click', (e) => {
-      for (const point of placemarks) {
-        point.options.set('iconImageHref', circle)
-        point.options.set('iconLayout', 'default#imageWithContent')
-      }
-
-      e.get('target').options.set('iconLayout', 'default#image')
-      // e.get('target').options.set('iconImageSize', [40, 40])
-      // e.get('target').options.set('iconImageOffset', [-20, -20])
-      // e.get('target').options.set('iconContentOffset', [15, 15])
-      e.get('target').options.set('iconImageHref', logo)
-    })
-
     return myGeoObject
   })
 
@@ -115,22 +108,45 @@ export default (pointsArray, state, setState) => {
   })
   clusterer.add(placemarks)
   clusterer.events.add('click', (e) => {
-    console.log(e.get('target'))
+    // console.log(e.get('target'))
+    for (const point of placemarks) {
+      point.options.set('iconImageHref', circle)
+      point.options.set('iconLayout', 'default#imageWithContent')
+    }
+    clusterer.getClusters().forEach((cl) => {
+      const value = cl.properties._data.iconContent
+
+      cl.options.set('iconImageHref', value > 3 ? vio : yel)
+      cl.options.set('iconLayout', 'default#imageWithContent')
+      // cl.options.set('iconContentOffset', [15, 15])
+      // cl.options.set('clusterIcons', clIcons)
+    })
+
     if (e.get('target').getGeoObjects) {
       const adsToShow = e
         .get('target')
         .getGeoObjects()
-        .map((obj) => obj.properties._data.indexToShow)
+        .map((obj) => pointsArray[obj.properties._data.indexToShow])
       setState({ ...state, adsToShow })
-    } else {
-    }
 
-    e.get('target').options.set('iconLayout', 'default#image')
-    // e.get('target').options.set('iconImageSize', [40, 40])
-    // e.get('target').options.set('iconImageOffset', [-20, -20])
-    // e.get('target').options.set('iconContentOffset', [15, 15])
-    e.get('target').options.set('iconImageHref', logo)
+      e.get('target').options.set('iconLayout', 'default#image')
+      e.get('target').options.set('iconImageHref', logo)
+
+      setState((state) => ({ ...state, cluster: clusterer }))
+    } else {
+      const adsToShow =
+        pointsArray[e.get('target').properties._data.indexToShow]
+
+      setState({ ...state, adsToShow: [adsToShow] })
+
+      e.get('target').options.set('iconLayout', 'default#image')
+      // e.get('target').options.set('iconImageSize', [40, 40])
+      // e.get('target').options.set('iconImageOffset', [-20, -20])
+      // e.get('target').options.set('iconContentOffset', [15, 15])
+      e.get('target').options.set('iconImageHref', logo)
+    }
   })
+  setState((state) => ({ ...state, cluster: clusterer }))
   map?.geoObjects.add(clusterer)
 }
 

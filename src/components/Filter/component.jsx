@@ -30,7 +30,7 @@ const Filter = () => {
   const { options, cities, types } = useSelector((state) => state)
 
   const [state, setState] = useState({
-    [ROOM_NUMBER]: '1',
+    [ROOM_NUMBER]: '', // TODO,
     [FROM]: '',
     [TO]: '',
     [TYPE]: 'flat',
@@ -119,8 +119,9 @@ const Filter = () => {
           className="yaps-filter__city-select yaps-filter__select"
           classNamePrefix="yaps"
           options={cities}
-          defaultValue={cities[0]}
+          // defaultValue={}
           theme={theme}
+          placeholder="Выберите город"
           onChange={handleCitiesSelectChange}
         />
       </div>

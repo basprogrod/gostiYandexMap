@@ -1,3 +1,5 @@
+@import '../../config/contstants.scss';
+
 .yaps-sidebar {
   position: absolute;
   top: 20px;
@@ -7,6 +9,23 @@
   z-index: 1;
   transition: all 0.2s;
   color: #454545;
+  font-family: Roboto, sans-serif;
+
+  &__header {
+    height: 42px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-top: 1px solid #0002;
+    padding: 0px 16px;
+
+    span {
+      &:last-child {
+        color: #9f9f9f;
+        font-size: 14px;
+      }
+    }
+  }
 
   &__open-btn {
     position: absolute;
@@ -40,5 +59,24 @@
         }
       }
     }
+  }
+
+  &__back-btn {
+    height: 57px;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    padding: 0px 16px;
+    color: #19a24b;
+
+    img {
+      margin-right: 8px;
+    }
+  }
+
+  &__widget-container {
+    max-height: 83vh;
+    overflow: auto;
+    @include scroll;
   }
 }

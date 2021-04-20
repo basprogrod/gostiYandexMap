@@ -21,6 +21,7 @@ const App = () => {
     isLoading: true,
     adsToShow: [],
     points: [],
+    cluster: undefined,
   })
 
   const init = () => {
@@ -28,6 +29,11 @@ const App = () => {
       (e) => onGetPosition(state, setState, e),
       (e) => onErrorGetPosition(state, setState, e)
     )
+  }
+
+  const handleBackToFilters = () => {
+    setState((state) => ({ ...state, adsToShow: [] }))
+    // console.log('-> state.cluster', state.cluster.getClusters())
   }
 
   useEffect(() => {
@@ -38,12 +44,12 @@ const App = () => {
     dispatch(getOptions())
     dispatch(getCities())
     dispatch(getAdTypes())
-    // dispatch(getFiteredData({}))
+    dispatch(getFiteredData({}))
   }, [])
 
   useEffect(() => {
     if (!ads.length) return
-    console.log('ads', ads)
+    // console.log('ads', ads)
     createAdPoints(ads, state, setState)
   }, [ads])
 
@@ -55,7 +61,10 @@ const App = () => {
         </div>
       )}
       {/* <Controls handleToDraw={handleToDraw} isDrawning={state.isDrawning} /> */}
-      <Sidebar />
+      <Sidebar
+        handleBackToFilters={handleBackToFilters}
+        adsArray={state.adsToShow}
+      />
       <div id="g-map"></div>
     </>
   )

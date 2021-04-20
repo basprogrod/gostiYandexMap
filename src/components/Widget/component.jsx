@@ -7,7 +7,15 @@ import square from '../../assets/img/squareIcon.svg'
 import './styles.scss'
 import StarIcon from '../svg/StarIcon'
 
-const Widget = ({ data }) => {
+const Widget = ({
+  adres,
+  date,
+  commonSquare,
+  descr,
+  price,
+  currency,
+  photos,
+}) => {
   // const {}
   const settings = {
     dots: true,
@@ -18,49 +26,30 @@ const Widget = ({ data }) => {
   }
   return (
     <div className="yaps-widget">
-      <div className="yaps-widget__header">
-        <span>Снять квартиру</span>
-        <span>650 предложений</span>
-      </div>
       <div className="yaps-widget__body">
         <Slider {...settings}>
-          <div>
-            <div className="yaps-widget__slide">
-              <img
-                src="https://im0-tub-by.yandex.net/i?id=37ddd5bae705676debe7686e3e1fffff&n=13"
-                alt=""
-              />
+          {photos.map((ph) => (
+            <div key={ph.id}>
+              <div className="yaps-widget__slide">
+                <img src={`https://gosti24.by/storage/${ph.path}`} alt="" />
+              </div>
             </div>
-          </div>
-          <div>
-            <div className="yaps-widget__slide">
-              <img
-                src="https://im0-tub-by.yandex.net/i?id=37ddd5bae705676debe7686e3e1fffff&n=13"
-                alt=""
-              />
-            </div>
-          </div>
-          <div>
-            <div className="yaps-widget__slide">
-              <img
-                src="https://im0-tub-by.yandex.net/i?id=37ddd5bae705676debe7686e3e1fffff&n=13"
-                alt=""
-              />
-            </div>
-          </div>
+          ))}
         </Slider>
 
         <div className="yaps-widget__fields">
           <div className="yaps-widget__field">
-            <div className="yaps-widget__cell">ЖК «Каскад», 2/6 этаж</div>
-            <div className="yaps-widget__cell">24/11/2020</div>
+            <div className="yaps-widget__cell">{adres}</div>
+            <div className="yaps-widget__cell yaps-widget__cell-grey">
+              {date}
+            </div>
           </div>
           <div className="yaps-widget__field">
-            <div className="yaps-widget__cell">2-комн. кв-ра</div>
+            <div className="yaps-widget__cell">{descr}</div>
             <div className="yaps-widget__cell">
               <img src={square} alt="" />
               <span>
-                56 м<sup>2</sup>
+                {commonSquare} м<sup>2</sup>
               </span>
             </div>
           </div>
@@ -74,24 +63,20 @@ const Widget = ({ data }) => {
               </button>
             </div>
             <div className="yaps-widget__cell">
-              <img src={square} alt="" />
               <span>
-                56 м<sup>2</sup>
+                {price} {currency} / 1 сут.
               </span>
             </div>
           </div>
         </div>
       </div>
       <div className="yaps-widget__footer">
-        <button>{dict.widget.BUTTON}</button>
+        <button className="yaps-widget__show-phone-btn">
+          {dict.widget.BUTTON}
+        </button>
       </div>
     </div>
   )
 }
 
 export default Widget
-
-//"yaps-widget__back-btn">
-//          <img src={arrow} alt="" />
-//          <span>{dict.widget.BACK_TO_FILTERS_BUTTON}</span>
-//        </button>

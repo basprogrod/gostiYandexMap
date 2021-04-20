@@ -1,5 +1,5 @@
 .yaps-widget {
-  padding: 16px;
+  padding: 0 16px 16px;
   font-family: Roboto, sans-serif;
 
   &__slide {
@@ -12,6 +12,9 @@
   }
   .slick-slider {
     margin-bottom: 14px;
+    height: 158px;
+    overflow: hidden;
+    border-radius: 4px;
   }
   .slick-dots li button:before {
     display: none;
@@ -36,6 +39,7 @@
     font-size: 12px;
     display: flex;
     align-items: center;
+
     span {
       height: 24px;
       width: 24px;
@@ -47,9 +51,65 @@
       justify-content: center;
       margin-right: 9px;
     }
+
+    &:hover,
+    &.active {
+      span {
+        background: rgba(#ffd319, 0.41);
+      }
+      path {
+        fill: #ffd319;
+      }
+
+      color: #ffd319;
+    }
   }
   &__field {
     display: flex;
     justify-content: space-between;
+    margin-bottom: 7px;
+  }
+
+  &__cell {
+    max-width: 220px;
+    display: flex;
+    align-items: center;
+    sup {
+      font-size: 10px;
+    }
+    img {
+      margin-right: 8px;
+    }
+    &-grey {
+      color: #9f9f9f;
+      font-size: 12px;
+    }
+  }
+
+  &__show-phone-btn {
+    background-color: #19a24b;
+    width: 100%;
+    height: 40px;
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    transition: all 0.3s;
+    border: 1px solid #19a24b;
+
+    &:hover {
+      background-color: #fff;
+      color: #19a24b;
+    }
+
+    &:active {
+      background-color: #19a24b;
+      color: #fff;
+    }
+  }
+
+  &__footer {
+    margin-top: 17px;
   }
 }
