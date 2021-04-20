@@ -3,4 +3,6 @@ export default {
   SET_OPTIONS: ' SET_OPTIONS',
   SET_ADS: ' SET_ADS',
   SET_TYPES: ' SET_TYPES',
+  SET_TYPE: ' SET_TYPE',
+  LOADING: ' LOADING',
 }

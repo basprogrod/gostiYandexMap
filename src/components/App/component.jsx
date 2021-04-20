@@ -7,13 +7,14 @@ import getFiteredData from '../../store/thunks/getFiteredData'
 
 import './styles.scss'
 import Sidebar from '../Sidebar'
+import Controls from '../Controls'
 import getOptions from '../../store/thunks/getOptions'
 import getCities from '../../store/thunks/getCities'
 import getAdTypes from '../../store/thunks/getAdTypes'
 import createAdPoints from '../utils/createAdPoints'
 
 const App = () => {
-  const { ads } = useSelector((state) => state)
+  const { ads, loading } = useSelector((state) => state)
   const dispatch = useDispatch()
 
   const [state, setState] = useState({
@@ -41,11 +42,17 @@ const App = () => {
   }, [])
 
   useEffect(() => {
+    if (state.isLoading) return
     dispatch(getOptions())
     dispatch(getCities())
     dispatch(getAdTypes())
-    dispatch(getFiteredData({}))
-  }, [])
+    dispatch(
+      getFiteredData({
+        type: 'flat',
+        // city: 'Минск',
+      })
+    )
+  }, [state.isLoading])
 
   useEffect(() => {
     if (!ads.length) return
@@ -60,12 +67,13 @@ const App = () => {
           <div className="span">loading...</div>
         </div>
       )}
-      {/* <Controls handleToDraw={handleToDraw} isDrawning={state.isDrawning} /> */}
+      <Controls handleToDraw={() => {}} />
       <Sidebar
         handleBackToFilters={handleBackToFilters}
         adsArray={state.adsToShow}
+        map={state.map}
       />
-      <div id="g-map"></div>
+      <div id="g-map" className={loading ? 'load' : ''}></div>
     </>
   )
 }

@@ -19,3 +19,13 @@ export const actionSetTypes = (payload) => ({
   type: actionsTypes.SET_TYPES,
   payload,
 })
+
+export const actionSetType = (payload) => ({
+  type: actionsTypes.SET_TYPE,
+  payload,
+})
+
+export const actionShowCloseLoader = (payload = true) => ({
+  type: actionsTypes.LOADING,
+  payload,
+})

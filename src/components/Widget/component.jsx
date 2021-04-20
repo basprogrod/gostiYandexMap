@@ -8,7 +8,7 @@ import './styles.scss'
 import StarIcon from '../svg/StarIcon'
 
 const Widget = ({
-  adres,
+  address,
   date,
   commonSquare,
   descr,
@@ -39,7 +39,7 @@ const Widget = ({
 
         <div className="yaps-widget__fields">
           <div className="yaps-widget__field">
-            <div className="yaps-widget__cell">{adres}</div>
+            <div className="yaps-widget__cell">{address}</div>
             <div className="yaps-widget__cell yaps-widget__cell-grey">
               {date}
             </div>

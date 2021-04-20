@@ -9,12 +9,12 @@ export default (state, setState, e) => {
   const map = new ymaps.Map('g-map', {
     center: center || [e.coords.latitude, e.coords.longitude],
     zoom: zoom || 10,
-    controls: [
-      /* 'zoomControl', 'geolocationControl' */
-    ],
+    // searchControlProvider: 'yandex#search',
+    controls: [],
   })
 
   window.map = map
+  // map.controls.add('zoomControl', { top: 200, right: 200 })
 
   map.events.add('boundschange', (e) => {
     storage.set({
@@ -23,6 +23,12 @@ export default (state, setState, e) => {
       zoom: e.originalEvent.newZoom,
     })
     console.log(storage.get())
+  })
+
+  storage.set({
+    bounds: map.getBounds(),
+    center: map.getCenter(),
+    zoom: map.getZoom(),
   })
 
   setState({

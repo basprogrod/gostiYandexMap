@@ -1,10 +1,12 @@
 import axios from 'axios'
 import qs from 'querystring'
+import { storage } from '../../components/utils/storageService'
 import { API_URL } from '../../config/constants'
 import dict from '../../config/dict'
-import { actionSetAds, actionSetCities } from '../actions'
+import { actionSetAds, actionSetType, actionShowCloseLoader } from '../actions'
 
 export default (state) => async (dispatch) => {
+  dispatch(actionShowCloseLoader())
   const fields = {}
 
   for (const key in state) {
@@ -12,18 +14,34 @@ export default (state) => async (dispatch) => {
     if (state[key]) fields[key] = state[key]
   }
 
-  const query = qs.stringify(fields)
+  const { bounds } = storage.get()
 
+  fields.start_longitude = bounds[0][1]
+  fields.start_latitude = bounds[0][0]
+  fields.end_longitude = bounds[1][1]
+  fields.end_latitude = bounds[1][0]
+
+  const query = qs.stringify(fields)
   try {
     await new Promise((res) => setTimeout(() => res(), 2000))
 
     const res = await axios.get(
-      `${API_URL}/map-by-name?type=flat&city=Минск${query}` // TODO
+      `${API_URL}/map-by-name?${query}` // TODO
     )
     //type=flat&city=Минск
+    console.log('-> res.data.data', res.data)
+    dispatch(
+      actionSetType({
+        type: res.data.housingTypeText || 'Снять квартиру',
+        count: res.data.response.total,
+      })
+    )
 
-    dispatch(actionSetAds(res.data.data))
+    dispatch(actionSetAds(res.data.response.data || []))
+    dispatch(actionShowCloseLoader(false))
   } catch (error) {
+    dispatch(actionShowCloseLoader(false))
+    console.log('-> error', error)
     alert(dict.webInteraction.INDEFINIT_ERROR)
   }
 }

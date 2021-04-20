@@ -2,16 +2,14 @@ import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import dict from '../../config/dict'
 import Select from 'react-select'
-import AsyncSelect from 'react-select/async'
 import './styles.scss'
 import PlusIcon from '../svg/PlusIcon'
 import MinusIcon from '../svg/MinusIcon'
 import SearchIcon from '../svg/SearchIcon'
-import Arrow from '../svg/Arrow'
 import Dropdown from '../Dropdown/component'
-import getOptions from '../../store/thunks/getOptions'
 import getFiteredData from '../../store/thunks/getFiteredData'
 import { filterFields } from '../../config/constants'
+import loader from '../../assets/img/loader.gif'
 
 const theme = (theme) => ({
   ...theme,
@@ -25,9 +23,9 @@ const theme = (theme) => ({
 
 const { CITY, TYPE, ROOM_NUMBER, FROM, TO, OPTIONS, VISITORS } = filterFields
 
-const Filter = () => {
+const Filter = ({ map }) => {
   const dispatch = useDispatch()
-  const { options, cities, types } = useSelector((state) => state)
+  const { options, cities, types, loading } = useSelector((state) => state)
 
   const [state, setState] = useState({
     [ROOM_NUMBER]: '', // TODO,
@@ -108,6 +106,8 @@ const Filter = () => {
   }
 
   const handleSubmifFilter = () => {
+    if (loading) return
+    map.geoObjects.removeAll()
     dispatch(getFiteredData(state))
   }
 
@@ -208,8 +208,13 @@ const Filter = () => {
       </div>
       <div className="yaps-filter__field btn">
         <button onClick={handleSubmifFilter}>
-          <SearchIcon />
-          <span>{dict.filter.SEARCH}</span>
+          {loading ? (
+            <img src={loader} alt="" />
+          ) : (
+            <>
+              <SearchIcon /> <span>{dict.filter.SEARCH}</span>
+            </>
+          )}
         </button>
       </div>
       <Dropdown

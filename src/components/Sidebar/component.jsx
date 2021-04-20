@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import { useSelector } from 'react-redux'
 import arrow from '../../assets/img/arrow.svg'
 import dict from '../../config/dict'
 import Filter from '../Filter'
@@ -6,7 +7,9 @@ import Widget from '../Widget'
 
 import './styles.scss'
 
-const Sidebar = ({ adsArray, handleBackToFilters }) => {
+const Sidebar = ({ adsArray, handleBackToFilters, map }) => {
+  const { adsType, adsCount } = useSelector((state) => state)
+
   const [state, setState] = useState({
     isOpen: true,
   })
@@ -34,23 +37,23 @@ const Sidebar = ({ adsArray, handleBackToFilters }) => {
           </button>
 
           <div className="yaps-sidebar__header">
-            <span>Снять квартиру</span>
-            <span>650 предложений</span>
+            <span>{adsType}</span>
+            <span>{adsCount} предложений</span>
           </div>
         </>
       )}
 
       {!adsArray.length ? (
-        <Filter />
+        <Filter map={map} />
       ) : (
         <div className="yaps-sidebar__widget-container">
           {adsArray.map((ad) => (
             <Widget
               key={ad.id}
-              adres={ad.name}
-              date={ad.updated_at}
-              commonSquare={55}
-              descr={ad.description}
+              address={ad.address}
+              date={ad.createdAt}
+              commonSquare={ad.area}
+              descr={ad.roomAmount}
               price={ad.price?.daily}
               currency={ad.price?.currency}
               photos={ad.photos}

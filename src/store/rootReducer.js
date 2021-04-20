@@ -5,6 +5,9 @@ const initState = {
   cities: [],
   ads: [],
   types: [],
+  adsType: '',
+  adsCount: undefined,
+  loading: false,
 }
 
 export default (state = initState, { type, payload }) => {
@@ -28,6 +31,18 @@ export default (state = initState, { type, payload }) => {
       return {
         ...state,
         types: payload,
+      }
+    case actionsTypes.SET_TYPE:
+      return {
+        ...state,
+        adsType: payload.type,
+        adsCount: payload.count,
+      }
+
+    case actionsTypes.LOADING:
+      return {
+        ...state,
+        loading: payload,
       }
     default:
       return state

@@ -1,6 +1,26 @@
 #g-map {
+  position: relative;
   width: 100%;
   height: 100%;
+
+  &::after {
+    position: absolute;
+    content: '';
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #0005;
+    pointer-events: none;
+    opacity: 0;
+    transition: all 0.3s;
+  }
+
+  &.load {
+    &::after {
+      opacity: 1;
+    }
+  }
 }
 
 .loader {
