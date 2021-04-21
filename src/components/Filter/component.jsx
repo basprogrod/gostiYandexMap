@@ -10,6 +10,7 @@ import Dropdown from '../Dropdown/component'
 import getFiteredData from '../../store/thunks/getFiteredData'
 import { filterFields } from '../../config/constants'
 import loader from '../../assets/img/loader.gif'
+import Loader from '../Loader/component'
 
 const theme = (theme) => ({
   ...theme,
@@ -126,14 +127,16 @@ const Filter = ({ map }) => {
         />
       </div>
       <div className="yaps-filter__field">
-        <Select
-          className="yaps-filter__type-select"
-          classNamePrefix="yaps"
-          options={types}
-          theme={theme}
-          defaultValue={types[0]}
-          onChange={handleTypesSelectChange}
-        />
+        {!!types.length && (
+          <Select
+            className="yaps-filter__type-select"
+            classNamePrefix="yaps"
+            options={types}
+            theme={theme}
+            defaultValue={types[0]}
+            onChange={handleTypesSelectChange}
+          />
+        )}
       </div>
       <div className="yaps-filter__field">
         <div className="yaps-filter__field-title">{dict.filter.ROOMS}</div>
@@ -209,7 +212,7 @@ const Filter = ({ map }) => {
       <div className="yaps-filter__field btn">
         <button onClick={handleSubmifFilter}>
           {loading ? (
-            <img src={loader} alt="" />
+            <Loader />
           ) : (
             <>
               <SearchIcon /> <span>{dict.filter.SEARCH}</span>

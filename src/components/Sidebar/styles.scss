@@ -80,3 +80,40 @@
     @include scroll;
   }
 }
+
+@media (max-width: 540px) {
+  .yaps-sidebar {
+    position: absolute;
+    // top: 0px;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #fff;
+    z-index: 1;
+    transition: all 0.2s;
+    color: #454545;
+    font-family: Roboto, sans-serif;
+
+    &.open {
+      width: 100%;
+      left: 0;
+
+      .yaps-sidebar {
+        &__open-btn {
+          display: none;
+          img {
+            transform: rotate(0deg);
+          }
+        }
+      }
+    }
+
+    // &__widget-container {
+    //   position: absolute;
+    //   bottom: 0;
+    //   display: flex;
+    //   overflow: auto;
+    //   width: auto;
+    // }
+  }
+}

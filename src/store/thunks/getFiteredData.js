@@ -1,8 +1,8 @@
 import axios from 'axios'
 import qs from 'querystring'
-import { storage } from '../../components/utils/storageService'
 import { API_URL } from '../../config/constants'
 import dict from '../../config/dict'
+import { storage } from '../../utils/storageService'
 import { actionSetAds, actionSetType, actionShowCloseLoader } from '../actions'
 
 export default (state) => async (dispatch) => {

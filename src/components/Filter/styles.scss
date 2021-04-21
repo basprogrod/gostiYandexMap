@@ -167,3 +167,12 @@
     margin-left: auto;
   }
 }
+
+@media (max-width: 540px) {
+  .yaps-filter {
+    background-color: #fff;
+    position: relative;
+    z-index: 1;
+    height: 100%;
+  }
+}

@@ -1,10 +1,9 @@
 import React from 'react'
 import { renderToString } from 'react-dom/server'
-import PlacePoint from '../PlacePoint'
-import vio from '../../assets/img/violetCircle.svg'
-import yel from '../../assets/img/yellowCircle.svg'
-import logo from '../../assets/img/logoIcon.svg'
-import circle from '../../assets/img/circle.svg'
+import vio from '../assets/img/violetCircle.svg'
+import yel from '../assets/img/yellowCircle.svg'
+import logo from '../assets/img/logoIcon.svg'
+import circle from '../assets/img/circle.svg'
 
 let placemarks = []
 
@@ -44,9 +43,9 @@ export default (pointsArray, state, setState) => {
   const clusterer = new ymaps.Clusterer(clOptoins)
 
   placemarks = pointsArray.map((point, i) => {
-    const Template = ymaps.templateLayoutFactory.createClass(
-      renderToString(<PlacePoint data={{ index: i }} />)
-    )
+    // const Template = ymaps.templateLayoutFactory.createClass(
+    //   renderToString(<PlacePoint data={{ index: i }} />)
+    // )
 
     const myGeoObject = new ymaps.GeoObject(
       {
@@ -127,6 +126,7 @@ export default (pointsArray, state, setState) => {
         .get('target')
         .getGeoObjects()
         .map((obj) => pointsArray[obj.properties._data.indexToShow])
+
       setState({ ...state, adsToShow })
 
       e.get('target').options.set('iconLayout', 'default#image')

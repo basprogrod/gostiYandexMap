@@ -1,4 +1,4 @@
-import { CACH_KEEPING_TIME } from '../../config/constants'
+import { CACH_KEEPING_TIME } from '../config/constants'
 
 class LocalStorageAdapter {
   set(keyName, value) {

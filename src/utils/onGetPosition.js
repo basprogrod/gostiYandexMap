@@ -1,4 +1,4 @@
-import { CACH_KEEPING_TIME } from '../../config/constants'
+import { CACH_KEEPING_TIME } from '../config/constants'
 import { storage } from './storageService'
 
 export default (state, setState, e) => {
@@ -22,7 +22,7 @@ export default (state, setState, e) => {
       center: e.originalEvent.newCenter,
       zoom: e.originalEvent.newZoom,
     })
-    console.log(storage.get())
+    // console.log(storage.get())
   })
 
   storage.set({

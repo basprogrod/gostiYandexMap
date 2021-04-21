@@ -1,13 +1,15 @@
 import React, { useState } from 'react'
 import { useSelector } from 'react-redux'
 import arrow from '../../assets/img/arrow.svg'
+import { SMALL_SREEN } from '../../config/constants'
 import dict from '../../config/dict'
+import useWindowWidth from '../../hooks/useWindowWidth'
 import Filter from '../Filter'
 import Widget from '../Widget'
 
 import './styles.scss'
 
-const Sidebar = ({ adsArray, handleBackToFilters, map }) => {
+const Sidebar = ({ adsArray, handleBackToFilters, map, width }) => {
   const { adsType, adsCount } = useSelector((state) => state)
 
   const [state, setState] = useState({
@@ -26,7 +28,7 @@ const Sidebar = ({ adsArray, handleBackToFilters, map }) => {
         <img src={arrow} alt="" />
       </button>
 
-      {!!adsArray.length && (
+      {!!adsArray.length && width > SMALL_SREEN && (
         <>
           <button
             className="yaps-sidebar__back-btn"
