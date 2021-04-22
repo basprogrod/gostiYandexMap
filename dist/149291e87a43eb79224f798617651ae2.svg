@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<svg width="40px" height="40px" viewBox="0 0 40 40" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <path d="M20 40C31.0457 40 40 31.0457 40 20C40 8.9543 31.0457 0 20 0C8.9543 0 0 8.9543 0 20C0 31.0457 8.9543 40 20 40Z" id="path_1" />
+    <clipPath id="clip_1">
+      <use xlink:href="#path_1" />
+    </clipPath>
+  </defs>
+  <g id="Булет-активный">
+    <g id="Oval">
+      <use stroke="none" fill="#19A24B" xlink:href="#path_1" fill-rule="evenodd" />
+      <g clip-path="url(#clip_1)">
+        <use xlink:href="#path_1" fill="none" stroke="#FFFFFF" stroke-width="6" />
+      </g>
+    </g>
+    <path d="M12.2884 6.01079L12.2884 11.2726L8.71127 11.2726L8.71127 6.01079L10.4997 4.70023L12.2884 6.01079ZM13.9948 0L10.4997 2.56088L7.00522 0L0 5.13339L0 13L4.06404 13L4.06404 11.2726L1.722 11.2726L1.722 6.01079L7.00522 2.13906L9.04029 3.6307L6.98985 5.13339L6.98985 13L14.0102 13L14.0102 5.13339L11.9597 3.6307L13.9948 2.13906L19.2783 6.01079L19.2783 11.2726L16.7413 11.2726L16.7413 13L21 13L21 5.13339L13.9948 0L13.9948 0Z" transform="translate(10 13)" id="Fill-36" fill="#FFFFFF" fill-rule="evenodd" stroke="none" />
+  </g>
+</svg>

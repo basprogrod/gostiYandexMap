@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
 import arrow from '../../assets/img/arrow.svg'
 import { SMALL_SREEN } from '../../config/constants'
@@ -15,6 +15,18 @@ const Sidebar = ({ adsArray, handleBackToFilters, map, width }) => {
   const [state, setState] = useState({
     isOpen: true,
   })
+
+  if (!Sidebar.open) {
+    Sidebar.open = () => {
+      setState({ ...state, isOpen: true })
+    }
+  }
+
+  useEffect(() => {
+    return () => {
+      delete Sidebar.open
+    }
+  }, [])
 
   const handleOpenCloseSidebar = () => {
     setState({ ...state, isOpen: !state.isOpen })
@@ -67,4 +79,5 @@ const Sidebar = ({ adsArray, handleBackToFilters, map, width }) => {
     </div>
   )
 }
+
 export default Sidebar

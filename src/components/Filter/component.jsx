@@ -1,24 +1,24 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import dict from '../../config/dict'
 import Select from 'react-select'
-import './styles.scss'
 import PlusIcon from '../svg/PlusIcon'
 import MinusIcon from '../svg/MinusIcon'
 import SearchIcon from '../svg/SearchIcon'
 import Dropdown from '../Dropdown/component'
 import getFiteredData from '../../store/thunks/getFiteredData'
 import { filterFields, SMALL_SREEN } from '../../config/constants'
-import loader from '../../assets/img/loader.gif'
 import Loader from '../Loader/component'
+
+import './styles.scss'
 
 const theme = (theme) => ({
   ...theme,
   colors: {
     ...theme.colors,
-    primary25: '#19a24b',
+    primary25: '#ffdf2c',
     primary: '#19a24b',
-    primary50: '#d3ffe3',
+    primary50: '#ffdf2c',
   },
 })
 
@@ -71,6 +71,11 @@ const Filter = ({ map, handleShowCloseFilter, width }) => {
   }
 
   const handleButtonChoose = (e) => {
+    if (e.target.dataset.value === state[ROOM_NUMBER]) {
+      setState({ ...state, [ROOM_NUMBER]: '' })
+      return
+    }
+
     setState({ ...state, [ROOM_NUMBER]: e.target.dataset.value })
   }
 
@@ -84,9 +89,7 @@ const Filter = ({ map, handleShowCloseFilter, width }) => {
     } else {
       setState({
         ...state,
-        [VISITORS]: e.target.dataset.plus
-          ? ++state[VISITORS]
-          : --state[VISITORS],
+        [VISITORS]: e.target.dataset.plus ? ++state[VISITORS] : --state[VISITORS],
       })
     }
   }
@@ -100,6 +103,7 @@ const Filter = ({ map, handleShowCloseFilter, width }) => {
   const handleCitiesSelectChange = (e) => {
     setState((state) => ({ ...state, [CITY]: e.value }))
   }
+
   const handleTypesSelectChange = (e) => {
     setState((state) => ({ ...state, [TYPE]: e.value }))
   }
@@ -126,46 +130,21 @@ const Filter = ({ map, handleShowCloseFilter, width }) => {
         />
       </div> */}
       <div className="yaps-filter__field">
-        {!!types.length && (
-          <Select
-            className="yaps-filter__type-select"
-            classNamePrefix="yaps"
-            options={types}
-            theme={theme}
-            defaultValue={types[0]}
-            onChange={handleTypesSelectChange}
-          />
-        )}
+        {!!types.length && <Select className="yaps-filter__type-select" classNamePrefix="yaps" options={types} theme={theme} defaultValue={types[0]} onChange={handleTypesSelectChange} />}
       </div>
       <div className="yaps-filter__field">
         <div className="yaps-filter__field-title">{dict.filter.ROOMS}</div>
         <div className="yaps-filter__buttons-set">
-          <button
-            data-value="1"
-            className={`${state[ROOM_NUMBER] === '1' ? 'active' : ''}`}
-            onClick={handleButtonChoose}
-          >
+          <button data-value="1" className={`${state[ROOM_NUMBER] === '1' ? 'active' : ''}`} onClick={handleButtonChoose}>
             1
           </button>
-          <button
-            data-value="2"
-            className={`${state[ROOM_NUMBER] === '2' ? 'active' : ''}`}
-            onClick={handleButtonChoose}
-          >
+          <button data-value="2" className={`${state[ROOM_NUMBER] === '2' ? 'active' : ''}`} onClick={handleButtonChoose}>
             2
           </button>
-          <button
-            data-value="3"
-            className={`${state[ROOM_NUMBER] === '3' ? 'active' : ''}`}
-            onClick={handleButtonChoose}
-          >
+          <button data-value="3" className={`${state[ROOM_NUMBER] === '3' ? 'active' : ''}`} onClick={handleButtonChoose}>
             3
           </button>
-          <button
-            data-value="4+"
-            className={`${state[ROOM_NUMBER] === '4+' ? 'active' : ''}`}
-            onClick={handleButtonChoose}
-          >
+          <button data-value="4+" className={`${state[ROOM_NUMBER] === '4+' ? 'active' : ''}`} onClick={handleButtonChoose}>
             4+
           </button>
         </div>
@@ -174,31 +153,14 @@ const Filter = ({ map, handleShowCloseFilter, width }) => {
         <div className="yaps-filter__field-title">{dict.filter.PRICE}</div>
 
         <div className="yaps-filter__inputs">
-          <input
-            type="text"
-            value={state[FROM]}
-            onChange={handleChoosePrice}
-            data-field={FROM}
-            placeholder={dict.filter.FROM}
-          />
-          <input
-            type="text"
-            value={state[TO]}
-            onChange={handleChoosePrice}
-            data-field={TO}
-            placeholder={dict.filter.TO}
-          />
+          <input type="text" value={state[FROM]} onChange={handleChoosePrice} data-field={FROM} placeholder={dict.filter.FROM} />
+          <input type="text" value={state[TO]} onChange={handleChoosePrice} data-field={TO} placeholder={dict.filter.TO} />
           <span className="yaps-filter__field-price">BYN</span>
         </div>
       </div>
       <div className="yaps-filter__field">
         <div className="yaps-filter__field-title">{dict.filter.GUESTS}</div>
-        <input
-          type="text"
-          className="yaps-filter__guests-input"
-          value={state[VISITORS] > 0 ? state[VISITORS] : ''}
-          onChange={handleChangeGuentsNumber}
-        />
+        <input type="text" className="yaps-filter__guests-input" value={state[VISITORS] > 0 ? state[VISITORS] : ''} onChange={handleChangeGuentsNumber} />
         <div className="yaps-filter__guests-buttons">
           <button data-minus onClick={handleSetGuestsNumber}>
             <MinusIcon />
@@ -219,12 +181,7 @@ const Filter = ({ map, handleShowCloseFilter, width }) => {
           )}
         </button>
       </div>
-      <Dropdown
-        options={options}
-        onSelect={handleSelectChip}
-        selectedOptions={state[OPTIONS]}
-        unsetChips={handleUnsetChips}
-      />
+      <Dropdown options={options} onSelect={handleSelectChip} selectedOptions={state[OPTIONS]} unsetChips={handleUnsetChips} />
     </div>
   )
 }

@@ -110,6 +110,10 @@
   }
 }
 
+.yaps-loader-container {
+  display: none;
+}
+
 @media (max-width: 540px) {
   #yaps {
     overflow: hidden;

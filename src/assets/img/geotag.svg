@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<svg width="8px" height="11px" viewBox="0 0 8 11" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <path d="M7.2917 5.75047C7.73835 5.15873 8 4.44071 8 3.66667C8 1.64162 6.20914 0 4 0C1.79086 0 0 1.64162 0 3.66667C0 4.44004 0.261196 5.15748 0.707134 5.74893L4 11L7.2917 5.75047Z" id="path_1" />
+    <path d="M1 2C1.55228 2 2 1.55228 2 1C2 0.447715 1.55228 0 1 0C0.447715 0 0 0.447715 0 1C0 1.55228 0.447715 2 1 2Z" transform="translate(3 3)" id="path_2" />
+    <clipPath id="clip_1">
+      <use xlink:href="#path_1" />
+    </clipPath>
+    <clipPath id="clip_2">
+      <use xlink:href="#path_2" />
+    </clipPath>
+  </defs>
+  <g id="Локация">
+    <g id="Combined-Shape">
+      <g clip-path="url(#clip_1)">
+        <use xlink:href="#path_1" fill="none" stroke="#19A24B" stroke-width="2.1414" />
+      </g>
+    </g>
+    <g id="Oval">
+      <use stroke="none" fill="#19A24B" xlink:href="#path_2" />
+      <g clip-path="url(#clip_2)">
+        <use xlink:href="#path_2" fill="none" stroke="#19A24B" stroke-width="1.11456" />
+      </g>
+    </g>
+  </g>
+</svg>

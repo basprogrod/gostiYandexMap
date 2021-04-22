@@ -4,6 +4,7 @@ import vio from '../assets/img/violetCircle.svg'
 import yel from '../assets/img/yellowCircle.svg'
 import logo from '../assets/img/logoIcon.svg'
 import circle from '../assets/img/circle.svg'
+import Sidebar from '../components/Sidebar'
 
 let placemarks = []
 
@@ -108,6 +109,8 @@ export default (pointsArray, state, setState) => {
   clusterer.add(placemarks)
 
   clusterer.events.add('click', (e) => {
+    Sidebar.open && Sidebar.open()
+
     for (const point of placemarks) {
       point.options.set('iconImageHref', circle)
       point.options.set('iconLayout', 'default#imageWithContent')

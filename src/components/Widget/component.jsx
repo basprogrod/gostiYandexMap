@@ -6,16 +6,9 @@ import square from '../../assets/img/squareIcon.svg'
 
 import './styles.scss'
 import StarIcon from '../svg/StarIcon'
+import Popup from '../Popup'
 
-const Widget = ({
-  address,
-  date,
-  commonSquare,
-  descr,
-  price,
-  currency,
-  photos,
-}) => {
+const Widget = ({ address, date, commonSquare, descr, price, currency, photos }) => {
   // const {}
   const settings = {
     dots: true,
@@ -23,6 +16,10 @@ const Widget = ({
     speed: 500,
     slidesToShow: 1,
     slidesToScroll: 1,
+  }
+
+  const hendleOpenPopup = () => {
+    Popup.open && Popup.open()
   }
   return (
     <div className="yaps-widget">
@@ -40,9 +37,7 @@ const Widget = ({
         <div className="yaps-widget__fields">
           <div className="yaps-widget__field">
             <div className="yaps-widget__cell">{address}</div>
-            <div className="yaps-widget__cell yaps-widget__cell-grey">
-              {date}
-            </div>
+            <div className="yaps-widget__cell yaps-widget__cell-grey">{date}</div>
           </div>
           <div className="yaps-widget__field">
             <div className="yaps-widget__cell">{descr}</div>
@@ -71,7 +66,7 @@ const Widget = ({
         </div>
       </div>
       <div className="yaps-widget__footer">
-        <button className="yaps-widget__show-phone-btn">
+        <button className="yaps-widget__show-phone-btn" onClick={hendleOpenPopup}>
           {dict.widget.BUTTON}
         </button>
       </div>

@@ -8,7 +8,7 @@
   font-family: Roboto, sans-serif;
   padding: 16px;
   padding-bottom: 0;
-  max-height: 95vh;
+  max-height: 77vh;
   overflow: auto;
 
   @include scroll;
@@ -28,6 +28,10 @@
     font-size: 15px;
     // background-color: #5681;
     justify-content: space-between;
+
+    button {
+      display: inline-block;
+    }
 
     &.btn {
       border: none;

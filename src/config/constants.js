@@ -2,7 +2,10 @@ export const FILTER = 'filter'
 export const ADS = 'ads'
 export const CACH_KEEPING_TIME = 2400000 // sec
 export const CORS = 'https://cors-everywhere.herokuapp.com/'
-export const API_URL = `${CORS}https://gosti24.by/api`
+
+export let API_URL = document.URL.includes('gosti24.by')
+  ? 'https://gosti24.by/api'
+  : `${CORS}https://gosti24.by/api`
 
 export const MEDIUM_SREEN = 960
 export const SMALL_SREEN = 540

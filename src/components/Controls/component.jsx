@@ -8,6 +8,9 @@ import MapIcon from '../svg/MapIcon'
 import './styles.scss'
 
 const Controls = ({ handleShowCloseFilter, isShowFilter, width }) => {
+  const handleGoToList = () => {
+    location.replace('/')
+  }
   return (
     <div className={`yaps-controls ${width < SMALL_SREEN ? 'mobile' : ''}`}>
       {width < SMALL_SREEN && (
@@ -18,7 +21,7 @@ const Controls = ({ handleShowCloseFilter, isShowFilter, width }) => {
           <span>{isShowFilter ? 'Карта' : 'Фильтры'}</span>
         </button>
       )}
-      <button className="yaps-btn yaps-controls__btn">
+      <button className="yaps-btn yaps-controls__btn" onClick={handleGoToList}>
         <ListIcon />
         <span>Списком</span>
       </button>
