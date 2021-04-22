@@ -113,7 +113,7 @@ const Filter = ({ map, handleShowCloseFilter, width }) => {
 
   return (
     <div className="yaps-filter">
-      <div className="yaps-filter__field">
+      {/* <div className="yaps-filter__field">
         <div className="yaps-filter__field-title">{dict.filter.FLAT}</div>
         <Select
           className="yaps-filter__city-select yaps-filter__select"
@@ -124,7 +124,7 @@ const Filter = ({ map, handleShowCloseFilter, width }) => {
           placeholder="Выберите город"
           onChange={handleCitiesSelectChange}
         />
-      </div>
+      </div> */}
       <div className="yaps-filter__field">
         {!!types.length && (
           <Select

@@ -9,12 +9,17 @@ export default (state, setState, e) => {
   const map = new ymaps.Map('g-map', {
     center: center || [e.coords.latitude, e.coords.longitude],
     zoom: zoom || 10,
-    // searchControlProvider: 'yandex#search',
+    searchControlProvider: 'yandex#search',
     controls: [],
   })
 
   window.map = map
-  // map.controls.add('zoomControl', { top: 200, right: 200 })
+
+  map.controls.add('zoomControl', { position: { right: 20, top: 75 } })
+  map.controls.add('searchControl', {
+    position: { right: 160, top: 20 },
+    // size: 'small',
+  })
 
   map.events.add('boundschange', (e) => {
     storage.set({

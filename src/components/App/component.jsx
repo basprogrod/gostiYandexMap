@@ -13,7 +13,7 @@ import getCities from '../../store/thunks/getCities'
 import getAdTypes from '../../store/thunks/getAdTypes'
 import createAdPoints from '../../utils/createAdPoints'
 import useWindowWidth from '../../hooks/useWindowWidth'
-import { SMALL_SREEN } from '../../config/constants'
+import { MEDIUM_SREEN, SMALL_SREEN } from '../../config/constants'
 import Widget from '../Widget'
 import Filter from '../Filter'
 import Loader from '../Loader/component'
@@ -75,6 +75,28 @@ const App = () => {
 
     createAdPoints(ads, state, setState)
   }, [ads])
+
+  useEffect(() => {
+    if (width < SMALL_SREEN && width < MEDIUM_SREEN) {
+      state.map.controls
+        .get('searchControl')
+        .options.set('position', { top: 68, right: 20 })
+      state.map?.controls
+        .get('zoomControl')
+        .options.set('position', { top: 120, right: 20 })
+    }
+
+    if (width > SMALL_SREEN && width < MEDIUM_SREEN) {
+      state.map?.controls
+        .get('searchControl')
+        .options.set('position', { top: 20, right: 70 })
+    }
+    if (width > MEDIUM_SREEN) {
+      state.map?.controls
+        .get('searchControl')
+        .options.set('position', { top: 20, right: 160 })
+    }
+  }, [width])
 
   return (
     <>
