@@ -4,8 +4,10 @@
   display: none;
 }
 .yaps-filter {
+  position: relative;
   font-family: Roboto, sans-serif;
   padding: 16px;
+  padding-bottom: 0;
   max-height: 95vh;
   overflow: auto;
 

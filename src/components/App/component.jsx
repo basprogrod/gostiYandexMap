@@ -20,7 +20,6 @@ import Loader from '../Loader/component'
 
 const App = () => {
   const width = useWindowWidth()
-  console.log('-> width app', width)
 
   const { ads, loading } = useSelector((state) => state)
   const dispatch = useDispatch()
@@ -29,7 +28,6 @@ const App = () => {
     map: null,
     isLoading: true,
     adsToShow: [],
-    points: [],
     cluster: undefined,
     isShowFilter: false,
   })
@@ -57,24 +55,24 @@ const App = () => {
     if (width < SMALL_SREEN) {
       setState({ ...state, adsToShow: ads })
     }
-    // setState({ ...state, isShowFilter: false })
   }, [width, ads])
 
   useEffect(() => {
     if (state.isLoading) return
-    // dispatch(getOptions())
+
+    dispatch(getOptions())
     // dispatch(getCities())
     // dispatch(getAdTypes())
-    dispatch(
-      getFiteredData({
-        type: 'flat',
-      })
-    )
+    // dispatch(
+    //   getFiteredData({
+    //     type: 'flat',
+    //   })
+    // )
   }, [state.isLoading])
 
   useEffect(() => {
     if (!ads.length) return
-    // console.log('ads', ads)
+
     createAdPoints(ads, state, setState)
   }, [ads])
 
@@ -88,6 +86,7 @@ const App = () => {
       <Controls
         handleShowCloseFilter={handleShowCloseFilter}
         isShowFilter={state.isShowFilter}
+        width={width}
       />
       {width > SMALL_SREEN ? (
         <Sidebar
@@ -95,7 +94,6 @@ const App = () => {
           handleBackToFilters={handleBackToFilters}
           adsArray={state.adsToShow}
           map={state.map}
-          isShowFilter={state.isShowFilter}
         />
       ) : (
         !!state.adsToShow.length &&
@@ -117,7 +115,14 @@ const App = () => {
         )
       )}
 
-      {state.isShowFilter && <Filter map={map} />}
+      {state.isShowFilter && (
+        <Filter
+          map={map}
+          handleShowCloseFilter={handleShowCloseFilter}
+          width={width}
+        />
+      )}
+
       <div id="g-map" className={loading ? 'load' : ''}>
         {loading && (
           <div className="yaps-loader-container">

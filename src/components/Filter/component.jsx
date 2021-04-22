@@ -8,7 +8,7 @@ import MinusIcon from '../svg/MinusIcon'
 import SearchIcon from '../svg/SearchIcon'
 import Dropdown from '../Dropdown/component'
 import getFiteredData from '../../store/thunks/getFiteredData'
-import { filterFields } from '../../config/constants'
+import { filterFields, SMALL_SREEN } from '../../config/constants'
 import loader from '../../assets/img/loader.gif'
 import Loader from '../Loader/component'
 
@@ -24,7 +24,7 @@ const theme = (theme) => ({
 
 const { CITY, TYPE, ROOM_NUMBER, FROM, TO, OPTIONS, VISITORS } = filterFields
 
-const Filter = ({ map }) => {
+const Filter = ({ map, handleShowCloseFilter, width }) => {
   const dispatch = useDispatch()
   const { options, cities, types, loading } = useSelector((state) => state)
 
@@ -98,16 +98,15 @@ const Filter = ({ map }) => {
   }
 
   const handleCitiesSelectChange = (e) => {
-    console.log(e)
     setState((state) => ({ ...state, [CITY]: e.value }))
   }
   const handleTypesSelectChange = (e) => {
-    console.log(e)
     setState((state) => ({ ...state, [TYPE]: e.value }))
   }
 
   const handleSubmifFilter = () => {
     if (loading) return
+    if (width < SMALL_SREEN) handleShowCloseFilter()
     map.geoObjects.removeAll()
     dispatch(getFiteredData(state))
   }

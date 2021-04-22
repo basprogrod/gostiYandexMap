@@ -76,12 +76,25 @@
     align-items: baseline;
 
     .yaps-widget {
+      position: relative;
       width: 280px;
       min-height: 314px;
       background-color: #fff;
       margin-right: 9px;
       padding: 0;
       padding-bottom: 12px;
+
+      &:last-child {
+        &::after {
+          position: absolute;
+          right: -8px;
+          bottom: 0;
+          content: '';
+          display: inline-block;
+          height: 100px;
+          width: 8px;
+        }
+      }
 
       &__fields,
       &__footer {

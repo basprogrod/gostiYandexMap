@@ -7,9 +7,7 @@ import MapIcon from '../svg/MapIcon'
 
 import './styles.scss'
 
-const Controls = ({ handleShowCloseFilter, isShowFilter }) => {
-  const width = useWindowWidth()
-
+const Controls = ({ handleShowCloseFilter, isShowFilter, width }) => {
   return (
     <div className={`yaps-controls ${width < SMALL_SREEN ? 'mobile' : ''}`}>
       {width < SMALL_SREEN && (

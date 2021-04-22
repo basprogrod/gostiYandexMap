@@ -7,6 +7,7 @@ import { actionSetAds, actionSetType, actionShowCloseLoader } from '../actions'
 
 export default (state) => async (dispatch) => {
   dispatch(actionShowCloseLoader())
+  dispatch(actionSetAds([]))
   const fields = {}
 
   for (const key in state) {

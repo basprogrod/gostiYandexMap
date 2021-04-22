@@ -8,7 +8,7 @@ import circle from '../assets/img/circle.svg'
 let placemarks = []
 
 export default (pointsArray, state, setState) => {
-  const { map, points } = state
+  const { map } = state
 
   const clIcons = [
     {
@@ -106,12 +106,13 @@ export default (pointsArray, state, setState) => {
     clusterDisableClickZoom: true,
   })
   clusterer.add(placemarks)
+
   clusterer.events.add('click', (e) => {
-    // console.log(e.get('target'))
     for (const point of placemarks) {
       point.options.set('iconImageHref', circle)
       point.options.set('iconLayout', 'default#imageWithContent')
     }
+
     clusterer.getClusters().forEach((cl) => {
       const value = cl.properties._data.iconContent
 
@@ -127,7 +128,7 @@ export default (pointsArray, state, setState) => {
         .getGeoObjects()
         .map((obj) => pointsArray[obj.properties._data.indexToShow])
 
-      setState({ ...state, adsToShow })
+      setState({ ...state, adsToShow, isShowFilter: false })
 
       e.get('target').options.set('iconLayout', 'default#image')
       e.get('target').options.set('iconImageHref', logo)
@@ -137,7 +138,7 @@ export default (pointsArray, state, setState) => {
       const adsToShow =
         pointsArray[e.get('target').properties._data.indexToShow]
 
-      setState({ ...state, adsToShow: [adsToShow] })
+      setState({ ...state, adsToShow: [adsToShow], isShowFilter: false })
 
       e.get('target').options.set('iconLayout', 'default#image')
       // e.get('target').options.set('iconImageSize', [40, 40])
@@ -146,39 +147,6 @@ export default (pointsArray, state, setState) => {
       e.get('target').options.set('iconImageHref', logo)
     }
   })
-  setState((state) => ({ ...state, cluster: clusterer }))
+  setState((state) => ({ ...state, cluster: clusterer, isShowFilter: false }))
   map?.geoObjects.add(clusterer)
 }
-
-// clusterer.add(
-//   points.map(
-//     (coords, i) =>
-//       new ymaps.Placemark(
-//         coords,
-//         {
-//           balloonContent: renderToString(
-//             <img src="http://img-fotki.yandex.ru/get/6114/82599242.2d6/0_88b97_ec425cf5_M" />
-//           ),
-//           // iconContent: i,
-//           hintContent: 'Москва',
-
-//           iconContentSize: [40, 40],
-//         },
-//         {
-//           iconLayout: ymaps.templateLayoutFactory.createClass(
-//             renderToString(<PlacePoint data={{ index: i }} />)
-//           ),
-//           iconShape: {
-//             type: 'Circle',
-//             coordinates: [0, 0],
-//             radius: 40,
-//           },
-
-//           // Отключаем кнопку закрытия балуна.
-//           // balloonCloseButton: false,
-//           // Балун будем открывать и закрывать кликом по иконке метки.
-//           hideIconOnBalloonOpen: false,
-//         }
-//       )
-//   )
-// )

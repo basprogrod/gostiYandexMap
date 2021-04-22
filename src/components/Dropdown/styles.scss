@@ -3,7 +3,9 @@
   margin-top: 18px;
 
   &__open-btn {
-    width: 100%;
+    position: sticky;
+    bottom: 0;
+    width: 95%;
     height: 40px;
     display: flex;
     justify-content: space-between;
@@ -20,10 +22,6 @@
       svg {
         transform: rotate(90deg);
       }
-    }
-
-    &:hover {
-      opacity: 0.5;
     }
   }
 

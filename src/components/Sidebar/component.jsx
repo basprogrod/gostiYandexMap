@@ -15,6 +15,7 @@ const Sidebar = ({ adsArray, handleBackToFilters, map, width }) => {
   const [state, setState] = useState({
     isOpen: true,
   })
+
   const handleOpenCloseSidebar = () => {
     setState({ ...state, isOpen: !state.isOpen })
   }
