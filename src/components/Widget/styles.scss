@@ -33,6 +33,28 @@
       }
     }
   }
+  .slick-prev {
+    left: 15px;
+    transform: rotate(-180deg);
+    z-index: 1;
+  }
+  .slick-next {
+    right: 15px;
+  }
+  .slick-next,
+  .slick-prev {
+    &::before,
+    &::after {
+      display: none;
+    }
+
+    opacity: 0.6;
+
+    &:hover {
+      opacity: 1;
+    }
+  }
+
   &__to-fav-btn {
     height: 24px;
     color: #9f9f9f;
@@ -55,13 +77,11 @@
     &:hover,
     &.active {
       span {
-        background: rgba(#ffd319, 0.41);
+        background: rgba(#ffd319, 0.2);
       }
       path {
         fill: #ffd319;
       }
-
-      color: #ffd319;
     }
   }
   &__field {

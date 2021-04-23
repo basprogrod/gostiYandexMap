@@ -45,7 +45,6 @@ export default (state, setState, e) => {
 
   setState({
     ...state,
-    isLoading: false,
     map: map,
   })
 }

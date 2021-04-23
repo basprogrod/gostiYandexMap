@@ -34,19 +34,13 @@ const Sidebar = ({ adsArray, handleBackToFilters, map, width }) => {
 
   return (
     <div className={`yaps-sidebar ${state.isOpen ? 'open' : ''}`}>
-      <button
-        className="yaps-sidebar__open-btn"
-        onClick={handleOpenCloseSidebar}
-      >
+      <button className="yaps-sidebar__open-btn" onClick={handleOpenCloseSidebar}>
         <img src={arrow} alt="" />
       </button>
 
       {!!adsArray.length && width > SMALL_SREEN && (
         <>
-          <button
-            className="yaps-sidebar__back-btn"
-            onClick={handleBackToFilters}
-          >
+          <button className="yaps-sidebar__back-btn" onClick={handleBackToFilters}>
             <img src={arrow} alt="" />
             <span>{dict.widget.BACK_TO_FILTERS_BUTTON}</span>
           </button>
@@ -62,9 +56,11 @@ const Sidebar = ({ adsArray, handleBackToFilters, map, width }) => {
         <Filter map={map} />
       ) : (
         <div className="yaps-sidebar__widget-container">
-          {adsArray.map((ad) => (
+          {adsArray.map((ad, index) => (
             <Widget
+              id={ad.id}
               key={ad.id}
+              index={index}
               address={ad.address}
               date={ad.createdAt}
               commonSquare={ad.area}

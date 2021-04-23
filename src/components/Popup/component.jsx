@@ -7,20 +7,25 @@ import wts from '../../assets/img/wts.svg'
 import geotag from '../../assets/img/geotag.svg'
 
 import './styles.scss'
+import { HOME, PHOTO_STORAGE_URL } from '../../config/constants'
 
-const Popup = () => {
+const messengers = {
+  tg: tg,
+  vb: vbr,
+  wt: wts,
+}
+
+const Popup = ({ adsArray }) => {
   const [state, setState] = useState({
     isShow: false,
-    name: '',
-    role: '',
-    id: '',
-    phones: ['', ''],
-    price: '',
-    currency: '',
+    ad: {},
   })
-  Popup.open = () => {
-    setState({ ...state, isShow: true })
+
+  Popup.open = (index) => {
+    setState({ ...state, isShow: true, ad: adsArray[index] })
   }
+
+  console.log(state.ad)
 
   useEffect(() => {
     //Рефу добавить с установкой класса
@@ -42,48 +47,51 @@ const Popup = () => {
           </button>
           <div className="yaps-popup__row">
             <div className="yaps-popup__tab">
-              <b>Анастасия Васильевна</b>
+              <b>{state.ad?.author.first_name}</b>
               <div className="yaps-popup__owner">
                 <span>
                   <img src={userIcon} alt="" />
-                  Домовладелец
+                  {state.ad?.author.subscription || 'Домовладелец'}
                 </span>
-                <span>ID: 24675665</span>
+                <span>ID: {state.ad.author.id}</span>
               </div>
             </div>
             <div className="yaps-popup__tab">
-              <a className="yaps-popup__phlink" href="tel:+375336268287">
-                <span>+375 (33) 626-82-87</span>
-                <img src={tg} alt="" />
-              </a>
-              <a className="yaps-popup__phlink" href="tel:+375336268287">
-                <span>+375 (33) 626-82-87</span>
-                <img src={wts} alt="" />
-                <img src={vbr} alt="" />
-              </a>
+              {state.ad?.phones.map((item) => (
+                <a key={item.id} className="yaps-popup__phlink" href={`tel:${item.text}`}>
+                  <span>{item.text}</span>
+                  {JSON.parse(item.messenger).map((el) => (
+                    <img key={el} src={messengers[el]} alt="" />
+                  ))}
+                </a>
+              ))}
             </div>
           </div>
           <div className="yaps-popup__row">
             <div className="yaps-popup__cell ">
-              <img className="yaps-popup__main-img" src="https://rf-onlinegame.ucoz.net/40s1_rf_online.jpg" alt="" />
+              <img className="yaps-popup__main-img" src={PHOTO_STORAGE_URL + state.ad?.photos[0].path} alt="" />
             </div>
             <div className="yaps-popup__cell descr">
               <div className="yaps-popup__price">
-                <span>142</span> BYN / сутки
+                <span>{state.ad?.price.daily}</span> {state.ad?.price.currency} / сутки
               </div>
               <div className="yaps-popup__descr">
-                <span>2-комн. квартира</span>
+                <span>{state.ad?.roomAmount}</span>
                 <span>
-                  56 м<sup>2</sup>
+                  {state.ad?.area} м<sup>2</sup>
                 </span>
-                <span>2/6 этаж</span>
+                <span>
+                  {state.ad?.floor} {`${state.ad?.floors ? `/ ${state.ad?.floors}` : ''}`} этаж
+                </span>
               </div>
               <div className="yaps-popup__location">
                 <img src={geotag} alt="" />
-                <span>г.Минск, п-т Партиза</span>
+                <span>{state.ad?.address}</span>
               </div>
 
-              <button className="yaps-popup__btn">Подробнее</button>
+              <a className="yaps-popup__btn" href={`${HOME}/${state.ad?.city.slug}/${state.ad?.id}`} target="blanck">
+                Подробнее
+              </a>
             </div>
           </div>
         </div>

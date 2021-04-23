@@ -9,13 +9,16 @@ import getCities from '../../store/thunks/getCities'
 import getAdTypes from '../../store/thunks/getAdTypes'
 import createAdPoints from '../../utils/createAdPoints'
 import useWindowWidth from '../../hooks/useWindowWidth'
-import { MEDIUM_SREEN, SMALL_SREEN } from '../../config/constants'
+import { SMALL_SREEN } from '../../config/constants'
 import Widget from '../Widget'
 import Filter from '../Filter'
 import Loader from '../Loader/component'
 
 import './styles.scss'
 import Popup from '../Popup'
+import setMapsControlsPosition from '../../utils/setMapsControlsPosition'
+import Hint from '../Hint/component'
+import hintDisplayer from '../../utils/hintDisplayer'
 
 const App = () => {
   const width = useWindowWidth()
@@ -58,37 +61,31 @@ const App = () => {
   }, [width, ads])
 
   useEffect(() => {
-    if (state.isLoading) return
-
     dispatch(getOptions())
     dispatch(getCities())
     dispatch(getAdTypes())
     dispatch(getFiteredData({ type: 'flat' }))
-  }, [state.isLoading])
+  }, [])
 
   useEffect(() => {
     if (!ads.length) return
-
     createAdPoints(ads, state, setState)
   }, [ads])
 
   useEffect(() => {
-    if (width < SMALL_SREEN && width < MEDIUM_SREEN) {
-      state.map?.controls.get('searchControl').options.set('position', { top: 68, right: 20 })
-      state.map?.controls.get('zoomControl').options.set('position', { top: 120, right: 20 })
-    }
+    if (!state.cluster) return
 
-    if (width > SMALL_SREEN && width < MEDIUM_SREEN) {
-      state.map?.controls.get('searchControl').options.set('position', { top: 20, right: 70 })
-    }
-    if (width > MEDIUM_SREEN) {
-      state.map?.controls.get('searchControl').options.set('position', { top: 20, right: 160 })
-    }
+    hintDisplayer(state.cluster)
+  }, [state.cluster])
+
+  useEffect(() => {
+    setMapsControlsPosition(width, state.map)
   }, [width, state.map])
 
   return (
     <>
-      <Popup />
+      <Hint />
+      <Popup adsArray={state.adsToShow} />
       {state.isLoading && (
         <div className="loader">
           <div className="span">loading...</div>
@@ -101,8 +98,19 @@ const App = () => {
         !!state.adsToShow.length &&
         !state.isShowFilter && (
           <div className="yaps__ads">
-            {state.adsToShow.map((ad) => (
-              <Widget key={ad.id} address={ad.address} date={ad.createdAt} commonSquare={ad.area} descr={ad.roomAmount} price={ad.price?.daily} currency={ad.price?.currency} photos={ad.photos} />
+            {state.adsToShow.map((ad, index) => (
+              <Widget
+                id={ad.id}
+                index={index}
+                key={ad.id}
+                address={ad.address}
+                date={ad.createdAt}
+                commonSquare={ad.area}
+                descr={ad.roomAmount}
+                price={ad.price?.daily}
+                currency={ad.price?.currency}
+                photos={ad.photos}
+              />
             ))}
           </div>
         )

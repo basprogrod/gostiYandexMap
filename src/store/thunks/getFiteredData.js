@@ -29,8 +29,7 @@ export default (state) => async (dispatch) => {
     const res = await axios.get(
       `${API_URL}/map-by-name?${query}` // TODO
     )
-    //type=flat&city=Минск
-    console.log('-> res.data.data', res.data)
+
     dispatch(
       actionSetType({
         type: res.data.housingTypeText || 'Снять квартиру',

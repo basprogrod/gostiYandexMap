@@ -170,7 +170,7 @@ const Filter = ({ map, handleShowCloseFilter, width }) => {
           </button>
         </div>
       </div>
-      <div className="yaps-filter__field btn">
+      <div className="yaps-filter__field yaps-filer__btn">
         <button onClick={handleSubmifFilter}>
           {loading ? (
             <Loader />

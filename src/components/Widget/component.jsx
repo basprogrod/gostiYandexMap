@@ -1,25 +1,54 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import dict from '../../config/dict'
 import Slider from 'react-slick'
 
 import square from '../../assets/img/squareIcon.svg'
+import sliderArrow from '../../assets/img/sliderArrow.svg'
 
 import './styles.scss'
 import StarIcon from '../svg/StarIcon'
 import Popup from '../Popup'
+import { PHOTO_STORAGE_URL } from '../../config/constants'
+import { useDispatch } from 'react-redux'
+import addToFav from '../../store/thunks/addToFav'
 
-const Widget = ({ address, date, commonSquare, descr, price, currency, photos }) => {
-  // const {}
+const Widget = ({ address, date, commonSquare, descr, price, currency, photos, index, id, fav = false }) => {
+  const dispatch = useDispatch()
+
+  const [state, setState] = useState({
+    isItFav: false,
+  })
+
+  useEffect(() => {
+    setState({ ...state, isItFav: fav })
+  }, [])
+
   const settings = {
     dots: true,
     infinite: true,
     speed: 500,
     slidesToShow: 1,
     slidesToScroll: 1,
+    arrows: true,
+    prevArrow: (
+      <span>
+        <img src={sliderArrow} alt="назад" />
+      </span>
+    ),
+    nextArrow: (
+      <span>
+        <img src={sliderArrow} alt="вперед" />
+      </span>
+    ),
   }
 
   const hendleOpenPopup = () => {
-    Popup.open && Popup.open()
+    Popup.open && Popup.open(index)
+  }
+
+  const handleAddToFav = () => {
+    dispatch(addToFav(id))
+    setState({ ...state, isItFav: !state.isItFav })
   }
   return (
     <div className="yaps-widget">
@@ -28,7 +57,7 @@ const Widget = ({ address, date, commonSquare, descr, price, currency, photos })
           {photos.map((ph) => (
             <div key={ph.id}>
               <div className="yaps-widget__slide">
-                <img src={`https://gosti24.by/storage/${ph.path}`} alt="" />
+                <img src={PHOTO_STORAGE_URL + ph.path} alt="" />
               </div>
             </div>
           ))}
@@ -50,7 +79,7 @@ const Widget = ({ address, date, commonSquare, descr, price, currency, photos })
           </div>
           <div className="yaps-widget__field">
             <div className="yaps-widget__cell">
-              <button className="yaps-widget__to-fav-btn">
+              <button className={`yaps-widget__to-fav-btn ${state.isItFav ? 'active' : ''}`} onClick={handleAddToFav}>
                 <span>
                   <StarIcon />
                 </span>

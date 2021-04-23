@@ -1,0 +1,18 @@
+.yaps-hint {
+  font-family: Roboto, serif;
+  position: fixed;
+  pointer-events: none;
+  z-index: 2;
+
+  &__panel {
+    position: absolute;
+    width: 80px;
+    height: 40px;
+    background-color: #fff;
+    border-radius: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0px 2px 14px rgba(0, 0, 0, 0.25);
+  }
+}
