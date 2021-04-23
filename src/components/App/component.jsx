@@ -49,6 +49,10 @@ const App = () => {
     setState((state) => ({ ...state, isShowFilter: !state.isShowFilter }))
   }
 
+  const handleSetLoading = () => {
+    setState((state) => ({ ...state, isLoading: false }))
+  }
+
   useEffect(() => {
     console.log('INIT YAPS')
     ymaps.ready(init)
@@ -61,11 +65,12 @@ const App = () => {
   }, [width, ads])
 
   useEffect(() => {
+    if (!state.map) return
     dispatch(getOptions())
     dispatch(getCities())
     dispatch(getAdTypes())
-    dispatch(getFiteredData({ type: 'flat' }))
-  }, [])
+    dispatch(getFiteredData({ type: 'flat' }, handleSetLoading))
+  }, [state.map])
 
   useEffect(() => {
     if (!ads.length) return

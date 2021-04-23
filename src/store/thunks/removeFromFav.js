@@ -4,7 +4,7 @@ import { HOME } from '../../config/constants'
 
 export default (spotId) => async (dispatch) => {
   try {
-    const res = await axios.post(`${HOME}/favorites/add?spotId=${spotId}`)
+    const res = await axios.delete(`${HOME}/favorites/delete?spotId=${spotId}`)
     const types = res.data.housingTypes.map((type) => ({
       value: type.type,
       label: type.name,

@@ -5,7 +5,7 @@ import dict from '../../config/dict'
 import { storage } from '../../utils/storageService'
 import { actionSetAds, actionSetType, actionShowCloseLoader } from '../actions'
 
-export default (state) => async (dispatch) => {
+export default (state, cb) => async (dispatch) => {
   dispatch(actionShowCloseLoader())
   dispatch(actionSetAds([]))
   const fields = {}
@@ -39,6 +39,9 @@ export default (state) => async (dispatch) => {
 
     dispatch(actionSetAds(res.data.response.data || []))
     dispatch(actionShowCloseLoader(false))
+    if (typeof cb === 'function') {
+      cb()
+    }
   } catch (error) {
     dispatch(actionShowCloseLoader(false))
     console.log('-> error', error)

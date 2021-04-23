@@ -11,6 +11,7 @@ import Popup from '../Popup'
 import { PHOTO_STORAGE_URL } from '../../config/constants'
 import { useDispatch } from 'react-redux'
 import addToFav from '../../store/thunks/addToFav'
+import removeFromFav from '../../store/thunks/removeFromFav'
 
 const Widget = ({ address, date, commonSquare, descr, price, currency, photos, index, id, fav = false }) => {
   const dispatch = useDispatch()
@@ -47,7 +48,12 @@ const Widget = ({ address, date, commonSquare, descr, price, currency, photos, i
   }
 
   const handleAddToFav = () => {
-    dispatch(addToFav(id))
+    if (state.isItFav) {
+      dispatch(removeFromFav(id))
+    } else {
+      dispatch(addToFav(id))
+    }
+
     setState({ ...state, isItFav: !state.isItFav })
   }
   return (
