@@ -58,6 +58,7 @@ const Sidebar = ({ adsArray, handleBackToFilters, map, width }) => {
         <div className="yaps-sidebar__widget-container">
           {adsArray.map((ad, index) => (
             <Widget
+              city={ad.city}
               id={ad.id}
               key={ad.id}
               index={index}

@@ -35,10 +35,7 @@ const App = () => {
   })
 
   const init = () => {
-    navigator.geolocation.getCurrentPosition(
-      (e) => onGetPosition(state, setState, e),
-      (e) => onGetPosition(state, setState, e)
-    )
+    onGetPosition(state, setState)
   }
 
   const handleBackToFilters = () => {
@@ -59,10 +56,8 @@ const App = () => {
   }, [])
 
   useEffect(() => {
-    if (width < SMALL_SREEN) {
-      setState({ ...state, adsToShow: ads })
-    }
-  }, [width, ads])
+    setState({ ...state, adsToShow: ads })
+  }, [ads])
 
   useEffect(() => {
     if (!state.map) return
@@ -105,6 +100,7 @@ const App = () => {
           <div className="yaps__ads">
             {state.adsToShow.map((ad, index) => (
               <Widget
+                city={ad.city}
                 id={ad.id}
                 index={index}
                 key={ad.id}

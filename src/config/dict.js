@@ -17,6 +17,7 @@ export default {
 
   widget: {
     BUTTON: 'Показать телефон',
+    BUTTON_MORE: 'Подробнее',
     BACK_TO_FILTERS_BUTTON: 'Назад к фильтрам',
   },
 }

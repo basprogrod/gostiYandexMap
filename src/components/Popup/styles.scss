@@ -8,8 +8,15 @@
   align-items: center;
   justify-content: center;
   background-color: #0004;
-  font-family: Roboto, sans-serif;
+  font-family: Roboto, Roboto-Regular, sans-serif;
   z-index: 99;
+
+  i {
+    path {
+      fill: #ffd319;
+      stroke: #ffd319;
+    }
+  }
 
   &__container {
     color: #454545;
@@ -26,16 +33,15 @@
     position: absolute;
     right: 16px;
     top: 16px;
-    // &:hover {
-    //   background-color: #19a24b;
-    //   use {
-    //     stroke: #fff;
-    //     fill: #19a24b;
-    //   }
-    //   path {
-    //     fill: #fff;
-    //   }
-    // }
+
+    &:hover {
+      #path_1 {
+        fill: #19a24b;
+      }
+      #Icon-color {
+        fill: #fff !important;
+      }
+    }
   }
 
   &__row {
@@ -77,6 +83,7 @@
       line-height: 17px;
 
       &:first-child {
+        font-family: Roboto, Roboto-Light;
         font-size: 14px;
         font-weight: 300;
         line-height: 17px;
@@ -104,6 +111,7 @@
   &__cell {
     &.descr {
       padding-left: 16px;
+      width: 100%;
     }
   }
 
@@ -118,6 +126,9 @@
     font-size: 28px;
     font-weight: 500;
     line-height: 34px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 
     span {
       color: #19a24b;
@@ -129,6 +140,7 @@
     font-weight: 400;
     line-height: 17px;
     margin-bottom: 7px;
+    width: 100%;
     sup {
       font-size: 9px;
     }
@@ -175,7 +187,76 @@
 
     &:hover {
       background-color: #19a24b;
-      color: #fff;
+      color: #fff !important;
+    }
+  }
+}
+
+@media (max-width: 600px) {
+  .yaps-popup {
+    &__container {
+      height: auto;
+      width: 100%;
+      padding: 10px;
+    }
+
+    &__owner {
+      span {
+        &:first-child {
+          margin-right: 20px;
+        }
+      }
+    }
+    &__tab {
+      height: auto;
+      width: auto;
+
+      &:last-child {
+        border: none;
+        padding-left: 0;
+        padding-top: 10px;
+      }
+    }
+    &__row {
+      flex-direction: column;
+
+      &:nth-child(2) {
+        padding-bottom: 10px;
+      }
+      &:last-child {
+        padding-top: 10px;
+      }
+    }
+
+    &__main-img {
+      width: 100%;
+    }
+
+    &__cell {
+      &.descr {
+        padding-left: 0;
+      }
+    }
+
+    &__price {
+      font-size: 22px;
+      margin-bottom: 0;
+    }
+
+    &__btn {
+      width: 100%;
+    }
+
+    &__close-btn {
+      top: 7px;
+      right: 7px;
+    }
+  }
+
+  #yaps {
+    // .ymaps-2-1-78-search_layout_panel,
+    [class*='search_layout_panel'] {
+      top: 46px;
     }
   }
 }

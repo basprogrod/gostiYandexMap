@@ -5,7 +5,7 @@
 }
 .yaps-filter {
   position: relative;
-  font-family: Roboto, sans-serif;
+  font-family: Roboto-Regular, sans-serif;
   padding: 16px;
   padding-bottom: 0;
   max-height: 77vh;
@@ -72,7 +72,8 @@
   }
 
   &__field-price {
-    // font-family: Roboto-Regular;
+    font-family: Roboto, Roboto-Medium;
+    font-weight: 500;
     font-size: 12px;
     margin-left: 12px;
     padding-right: 4px;

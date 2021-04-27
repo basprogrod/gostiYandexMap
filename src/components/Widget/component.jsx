@@ -6,14 +6,14 @@ import square from '../../assets/img/squareIcon.svg'
 import sliderArrow from '../../assets/img/sliderArrow.svg'
 
 import './styles.scss'
-import StarIcon from '../svg/StarIcon'
 import Popup from '../Popup'
-import { PHOTO_STORAGE_URL } from '../../config/constants'
+import { HOME, PHOTO_STORAGE_URL } from '../../config/constants'
 import { useDispatch } from 'react-redux'
 import addToFav from '../../store/thunks/addToFav'
 import removeFromFav from '../../store/thunks/removeFromFav'
+import FavIcon from '../svg/FavIcon'
 
-const Widget = ({ address, date, commonSquare, descr, price, currency, photos, index, id, fav = false }) => {
+const Widget = ({ address, date, commonSquare, descr, price, currency, photos, index, id, fav = false, city }) => {
   const dispatch = useDispatch()
 
   const [state, setState] = useState({
@@ -33,18 +33,18 @@ const Widget = ({ address, date, commonSquare, descr, price, currency, photos, i
     arrows: true,
     prevArrow: (
       <span>
-        <img src={sliderArrow} alt="назад" />
+        <img className="yasp-slider-arrow yasp-slider-arrow__left" src={sliderArrow} alt="назад" />
       </span>
     ),
     nextArrow: (
       <span>
-        <img src={sliderArrow} alt="вперед" />
+        <img className="yasp-slider-arrow yasp-slider-arrow__right" src={sliderArrow} alt="вперед" />
       </span>
     ),
   }
 
   const hendleOpenPopup = () => {
-    Popup.open && Popup.open(index)
+    Popup.open && Popup.open(index, state.isItFav)
   }
 
   const handleAddToFav = () => {
@@ -71,7 +71,11 @@ const Widget = ({ address, date, commonSquare, descr, price, currency, photos, i
 
         <div className="yaps-widget__fields">
           <div className="yaps-widget__field">
-            <div className="yaps-widget__cell">{address}</div>
+            <div className="yaps-widget__cell">
+              <a target="_blank" href={`${HOME}${city.slug}/${id}`}>
+                {address}
+              </a>
+            </div>
             <div className="yaps-widget__cell yaps-widget__cell-grey">{date}</div>
           </div>
           <div className="yaps-widget__field">
@@ -87,12 +91,12 @@ const Widget = ({ address, date, commonSquare, descr, price, currency, photos, i
             <div className="yaps-widget__cell">
               <button className={`yaps-widget__to-fav-btn ${state.isItFav ? 'active' : ''}`} onClick={handleAddToFav}>
                 <span>
-                  <StarIcon />
+                  <FavIcon />
                 </span>
-                В избранное
+                {state.isItFav ? 'В избранном' : 'В избранное'}
               </button>
             </div>
-            <div className="yaps-widget__cell">
+            <div className="yaps-widget__cell yaps-widget__cell-price">
               <span>
                 {price} {currency} / 1 сут.
               </span>
@@ -102,8 +106,11 @@ const Widget = ({ address, date, commonSquare, descr, price, currency, photos, i
       </div>
       <div className="yaps-widget__footer">
         <button className="yaps-widget__show-phone-btn" onClick={hendleOpenPopup}>
-          {dict.widget.BUTTON}
+          <b>{dict.widget.BUTTON}</b>
         </button>
+        <a className="yaps-widget__show-phone-btn yaps-widget__show-phone-btn-o" href={`${HOME}${city.slug}/${id}`} target="_blank">
+          <b>{dict.widget.BUTTON_MORE}</b>
+        </a>
       </div>
     </div>
   )

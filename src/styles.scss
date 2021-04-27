@@ -14,14 +14,37 @@ button {
     outline: none;
   }
 }
-a {
-  text-decoration: none !important;
-}
 
 #yaps {
   position: relative;
   width: 100%;
   height: 100%;
+  b {
+    font-family: Roboto, Roboto-Medium, sans-serif;
+    font-weight: 500;
+  }
+  sup {
+    position: static;
+    font-size: 8px !important;
+    line-height: initial !important;
+    top: unset;
+  }
+  button {
+    font-family: Roboto, Roboto-Medium;
+    font-weight: 500;
+  }
+  a {
+    text-decoration: none !important;
+
+    &:active,
+    &:visited,
+    a:focus {
+      color: inherit;
+    }
+    &:hover {
+      color: #19a24b;
+    }
+  }
 }
 
 .yaps {
