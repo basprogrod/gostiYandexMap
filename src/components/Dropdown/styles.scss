@@ -5,7 +5,7 @@
   &__open-btn {
     position: sticky;
     bottom: 0;
-    width: 95%;
+    width: 100%;
     height: 40px;
     display: flex;
     justify-content: space-between;
@@ -75,6 +75,8 @@
     color: #454545;
     font-size: 11px;
     transition: all 0.3s;
+    font-family: Roboto, Roboto-Regular !important;
+    font-weight: 400 !important;
 
     &-icon {
       opacity: 0;

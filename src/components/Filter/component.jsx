@@ -7,7 +7,7 @@ import MinusIcon from '../svg/MinusIcon'
 import SearchIcon from '../svg/SearchIcon'
 import Dropdown from '../Dropdown/component'
 import getFiteredData from '../../store/thunks/getFiteredData'
-import { filterFields, SMALL_SREEN } from '../../config/constants'
+import { filterFields, SMALL_SREEN, MAX_PRICE_LENGTH } from '../../config/constants'
 import Loader from '../Loader/component'
 
 import './styles.scss'
@@ -33,7 +33,7 @@ const Filter = ({ map, handleShowCloseFilter, width }) => {
     [FROM]: '',
     [TO]: '',
     [TYPE]: 'flat',
-    [VISITORS]: 0,
+    [VISITORS]: 1,
     [OPTIONS]: [],
     [CITY]: '',
   })
@@ -62,6 +62,7 @@ const Filter = ({ map, handleShowCloseFilter, width }) => {
   }
 
   const handleChoosePrice = (e) => {
+    if (e.target.value.length > MAX_PRICE_LENGTH) return
     if (!/^\d+$|^$/.test(e.target.value)) return
 
     setState({
@@ -80,16 +81,15 @@ const Filter = ({ map, handleShowCloseFilter, width }) => {
   }
 
   const handleSetGuestsNumber = (e) => {
-    if (state.guestsNumber < 0) {
+    setState({
+      ...state,
+      [VISITORS]: e.target.dataset.plus ? ++state[VISITORS] : --state[VISITORS],
+    })
+
+    if (state.visitors <= 0) {
       setState({
         ...state,
         [VISITORS]: 0,
-      })
-      return
-    } else {
-      setState({
-        ...state,
-        [VISITORS]: e.target.dataset.plus ? ++state[VISITORS] : --state[VISITORS],
       })
     }
   }

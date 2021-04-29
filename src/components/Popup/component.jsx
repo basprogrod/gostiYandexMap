@@ -100,7 +100,7 @@ const Popup = ({ adsArray }) => {
             </div>
           </div>
           <div className="yaps-popup__row">
-            <a href={`${HOME}/${state.ad?.city.slug}/${state.ad?.id}`} target="_blank" className="yaps-popup__cell ">
+            <a href={`${HOME}/${state.ad?.city.slug}/${state.ad?.id}`} target="_blank" className="yaps-popup__cell yaps-popup__cell-img">
               <img className="yaps-popup__main-img" src={PHOTO_STORAGE_URL + state.ad?.photos[0].path} alt="" />
             </a>
             <div className="yaps-popup__cell descr">

@@ -13,7 +13,7 @@ export default (state, setState) => {
     controls: [],
   })
 
-  window.map = map
+  window.gMap = map
 
   map.controls?.add('zoomControl', { position: { right: 20, top: 75 } })
   map.controls?.add('searchControl', {
@@ -21,6 +21,7 @@ export default (state, setState) => {
   })
 
   map.events.add('boundschange', (e) => {
+    console.log(e.get('target').geoObjects.getIterator().getNext().getGeoObjects())
     storage.set({
       bounds: e.originalEvent.newBounds,
       center: e.originalEvent.newCenter,

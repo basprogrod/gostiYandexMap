@@ -9,7 +9,7 @@ import getCities from '../../store/thunks/getCities'
 import getAdTypes from '../../store/thunks/getAdTypes'
 import createAdPoints from '../../utils/createAdPoints'
 import useWindowWidth from '../../hooks/useWindowWidth'
-import { SMALL_SREEN } from '../../config/constants'
+import { SMALL_SREEN, ZOOM } from '../../config/constants'
 import Widget from '../Widget'
 import Filter from '../Filter'
 import Loader from '../Loader/component'
@@ -82,6 +82,17 @@ const App = () => {
     setMapsControlsPosition(width, state.map)
   }, [width, state.map])
 
+  if (!window.getAds) {
+    window.getAds = (center, zoom = ZOOM) => {
+      gMap.geoObjects.removeAll()
+      gMap.setCenter(center)
+      gMap.setZoom(zoom)
+
+      setState((state) => ({ ...state, adsToShow: [], isLoading: true }))
+      dispatch(getFiteredData({ type: 'flat' }, handleSetLoading))
+    }
+  }
+
   return (
     <>
       <Hint />
@@ -117,7 +128,7 @@ const App = () => {
         )
       )}
 
-      {state.isShowFilter && <Filter map={map} handleShowCloseFilter={handleShowCloseFilter} width={width} />}
+      {state.isShowFilter && <Filter map={gMap} handleShowCloseFilter={handleShowCloseFilter} width={width} />}
 
       <div id="g-map" className={loading ? 'load' : ''}>
         {loading && (

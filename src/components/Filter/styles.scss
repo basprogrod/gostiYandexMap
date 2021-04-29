@@ -14,15 +14,22 @@
   @include scroll;
 
   input {
+    position: relative;
     height: 32px;
-    border: 1px solid #0002;
-    padding: 0px 8px;
+    border: 1px solid #0000000d;
+    padding: 0px 7px;
     border-radius: 4px;
+    font-size: 12px;
+    font-family: Roboto, Roboto-Regular;
+
+    &:focus {
+      z-index: 1;
+    }
   }
 
   &__field {
     height: 58px;
-    border-bottom: 1px solid #0001;
+    border-bottom: 1px solid #0000000d;
     display: flex;
     align-items: center;
     font-size: 15px;
@@ -68,7 +75,12 @@
     }
   }
 
-  &__filter-title {
+  &__buttons-set {
+    button {
+      color: #454545;
+      border: 1px solid #0000000d;
+      border-radius: 4px;
+    }
   }
 
   &__field-price {
@@ -127,7 +139,7 @@
 
   &__inputs {
     input {
-      width: 55px;
+      width: 57px;
 
       &:first-child {
         border-top-right-radius: 0;
@@ -153,6 +165,9 @@
       }
       &:last-child {
         margin-left: 8px;
+        path {
+          stroke: #19a24b;
+        }
       }
 
       &:hover {
@@ -181,5 +196,6 @@
     position: relative;
     z-index: 1;
     height: 100%;
+    max-height: none;
   }
 }

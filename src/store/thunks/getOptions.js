@@ -1,7 +1,6 @@
 import axios from 'axios'
 import { API_URL } from '../../config/constants'
 import { actionSetOptions } from '../actions'
-const corsEveryWhere = 'https://cors-everywhere.herokuapp.com/'
 
 export default () => async (dispatch) => {
   try {
