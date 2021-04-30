@@ -8,6 +8,7 @@
   background-color: transparent;
   justify-content: center;
   transform: translateX(-50%) translateY(-50%);
+  z-index: 1;
 
   &__number {
     position: relative;
@@ -21,7 +22,43 @@
     top: -9px;
   }
 
-  &:hover {
-    background-color: #9429;
+  &__hint {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 40px;
+    display: flex;
+    border-radius: 50px;
+    height: 40px;
+    align-items: center;
+    justify-content: center;
+    padding-left: 40px;
+    white-space: nowrap;
+    overflow: hidden;
+    background-color: #fff;
+    box-shadow: 0px 2px 14px rgba(0, 0, 0, 0.25);
+    font-family: Roboto, Roboto-Regular;
+    font-size: 12px;
+    font-weight: 400;
+    transition: all 0.3s;
+    &.with-image {
+    }
+    &.active {
+      width: 120px;
+    }
   }
+
+  &__logo-image {
+    position: absolute;
+    display: none;
+    z-index: 2;
+    img {
+      width: 43px;
+      height: 43px;
+    }
+  }
+}
+
+[data-place-index].withImage + .yaps-placemarck__logo-image {
+  display: block;
 }

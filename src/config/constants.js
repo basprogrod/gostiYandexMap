@@ -14,6 +14,7 @@ export const MEDIUM_SREEN = 960
 export const SMALL_SREEN = 540
 export const MAX_PRICE_LENGTH = 6
 export const ZOOM = 12
+export const TIME_ON_CHANGE_LOCATION = 1000
 
 export const filterFields = {
   CITY: 'city',

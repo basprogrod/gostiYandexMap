@@ -13,12 +13,12 @@ import { SMALL_SREEN, ZOOM } from '../../config/constants'
 import Widget from '../Widget'
 import Filter from '../Filter'
 import Loader from '../Loader/component'
-
-import './styles.scss'
 import Popup from '../Popup'
 import setMapsControlsPosition from '../../utils/setMapsControlsPosition'
 import Hint from '../Hint/component'
 import hintDisplayer from '../../utils/hintDisplayer'
+
+import './styles.scss'
 
 const App = () => {
   const width = useWindowWidth()
@@ -30,9 +30,13 @@ const App = () => {
     map: null,
     isLoading: true,
     adsToShow: [],
+    prevCenter: [],
     cluster: undefined,
     isShowFilter: false,
   })
+  // App.setCenter = (preVCenter) => {
+
+  // }
 
   const init = () => {
     onGetPosition(state, setState)

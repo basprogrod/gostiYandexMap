@@ -5,15 +5,24 @@ import dict from '../../config/dict'
 import { storage } from '../../utils/storageService'
 import { actionSetAds, actionSetType, actionShowCloseLoader } from '../actions'
 
-export default (state, cb) => async (dispatch) => {
+let prevState = undefined
+
+export default (state, cb, invokeFromChangeBounds) => async (dispatch) => {
   dispatch(actionShowCloseLoader())
   dispatch(actionSetAds([]))
+
   const fields = {}
+
+  if (invokeFromChangeBounds && prevState) {
+    state = prevState
+  }
 
   for (const key in state) {
     if (Array.isArray(state[key]) && !state[key].length) continue
     if (state[key]) fields[key] = state[key]
   }
+
+  prevState = state
 
   const { bounds } = storage.get()
 

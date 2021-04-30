@@ -5,6 +5,7 @@ import yel from '../assets/img/yellowCircle.svg'
 import logo from '../assets/img/logoIcon.svg'
 import circle from '../assets/img/circle.svg'
 import Sidebar from '../components/Sidebar'
+import PlacePoint from '../components/PlacePoint'
 import { clOptoins } from '../config/constants'
 
 let placemarks = []
@@ -18,6 +19,8 @@ export default (pointsArray, state, setState) => {
   const clusterer = new ymaps.Clusterer(clOptoins)
 
   placemarks = pointsArray.map((point, i) => {
+    const Template = ymaps.templateLayoutFactory.createClass(renderToString(<PlacePoint data={{ price: `${point.price.daily} ${point.price.currency}`, index: i }} />))
+
     const myGeoObject = new ymaps.GeoObject(
       {
         // Описываем геометрию типа "Точка".
@@ -27,15 +30,17 @@ export default (pointsArray, state, setState) => {
         },
         // Описываем данные геообъекта.
         properties: {
+          onHover: PlacePoint.click,
           hintContent: `${point.price.daily} ${point.price.currency}`,
           iconContent: renderToString(<div className="yaps__icon-content">1</div>),
           indexToShow: i,
         },
       },
       {
-        iconLayout: 'default#imageWithContent',
+        iconLayout: Template,
         iconImageHref: circle,
         hasBalloon: false,
+        hasHint: false,
         iconShape: {
           type: 'Circle',
           coordinates: [0, 0],
@@ -63,8 +68,8 @@ export default (pointsArray, state, setState) => {
     Sidebar.open && Sidebar.open()
 
     for (const point of placemarks) {
-      point.options.set('iconImageHref', circle)
-      point.options.set('iconLayout', 'default#imageWithContent')
+      // point.options.set('iconImageHref', circle)
+      // point.options.set('iconLayout', 'default#imageWithContent')
     }
 
     clusterer.getClusters().forEach((cl) => {
@@ -89,9 +94,6 @@ export default (pointsArray, state, setState) => {
       const adsToShow = pointsArray[e.get('target').properties._data.indexToShow]
 
       setState({ ...state, adsToShow: [adsToShow], isShowFilter: false, isLoading: false })
-
-      e.get('target').options.set('iconLayout', 'default#image')
-      e.get('target').options.set('iconImageHref', logo)
     }
   })
   setState((state) => ({ ...state, cluster: clusterer, isShowFilter: false, isLoading: false }))

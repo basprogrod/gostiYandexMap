@@ -1,5 +1,12 @@
-import { CACH_KEEPING_TIME } from '../config/constants'
+import { CACH_KEEPING_TIME, TIME_ON_CHANGE_LOCATION } from '../config/constants'
 import { storage } from './storageService'
+import stor from '../store'
+import store from '../store'
+import getFiteredData from '../store/thunks/getFiteredData'
+import simpleDebounce from './simpleDebounce'
+
+const debounce = simpleDebounce(TIME_ON_CHANGE_LOCATION)
+const getAds = () => store.dispatch(getFiteredData({}, undefined, true))
 
 export default (state, setState) => {
   const { center, zoom, ts } = storage.get()
@@ -21,13 +28,15 @@ export default (state, setState) => {
   })
 
   map.events.add('boundschange', (e) => {
-    console.log(e.get('target').geoObjects.getIterator().getNext().getGeoObjects())
     storage.set({
       bounds: e.originalEvent.newBounds,
       center: e.originalEvent.newCenter,
       zoom: e.originalEvent.newZoom,
     })
-    // console.log(storage.get())
+
+    if (stor.getState().loading) return
+
+    debounce(getAds)
   })
 
   storage.set({
