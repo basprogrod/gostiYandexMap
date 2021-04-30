@@ -115,6 +115,11 @@ const Filter = ({ map, handleShowCloseFilter, width }) => {
     dispatch(getFiteredData(state))
   }
 
+  Filter.apply = () => {
+    map.geoObjects.removeAll()
+    dispatch(getFiteredData(state))
+  }
+
   return (
     <div className="yaps-filter">
       {/* <div className="yaps-filter__field">

@@ -1,5 +1,9 @@
+import Filter from '../components/Filter'
 import { CACH_KEEPING_TIME } from '../config/constants'
 import { storage } from './storageService'
+import stor from '../store'
+import store from '../store'
+import getFiteredData from '../store/thunks/getFiteredData'
 
 export default (state, setState) => {
   const { center, zoom, ts } = storage.get()
@@ -21,13 +25,15 @@ export default (state, setState) => {
   })
 
   map.events.add('boundschange', (e) => {
-    console.log(e.get('target').geoObjects.getIterator().getNext().getGeoObjects())
     storage.set({
       bounds: e.originalEvent.newBounds,
       center: e.originalEvent.newCenter,
       zoom: e.originalEvent.newZoom,
     })
-    // console.log(storage.get())
+
+    if (stor.getState().loading) return
+
+    store.dispatch(getFiteredData({}, undefined, true))
   })
 
   storage.set({

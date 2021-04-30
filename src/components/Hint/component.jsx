@@ -21,7 +21,7 @@ const Hint = () => {
     <div className="yaps-hint">
       {state.isShow && (
         <div style={{ left: state.position.left, top: state.position.top }} className="yaps-hint__panel">
-          {state.price}
+          от {state.price}
         </div>
       )}
     </div>
