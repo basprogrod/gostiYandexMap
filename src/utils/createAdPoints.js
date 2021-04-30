@@ -19,7 +19,6 @@ export default (pointsArray, state, setState) => {
   const clusterer = new ymaps.Clusterer(clOptoins)
 
   placemarks = pointsArray.map((point, i) => {
-    console.log('kek')
     const Template = ymaps.templateLayoutFactory.createClass(renderToString(<PlacePoint data={{ price: `${point.price.daily} ${point.price.currency}`, index: i }} />))
 
     const myGeoObject = new ymaps.GeoObject(

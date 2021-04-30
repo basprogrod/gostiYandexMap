@@ -1,9 +1,12 @@
-import Filter from '../components/Filter'
-import { CACH_KEEPING_TIME } from '../config/constants'
+import { CACH_KEEPING_TIME, TIME_ON_CHANGE_LOCATION } from '../config/constants'
 import { storage } from './storageService'
 import stor from '../store'
 import store from '../store'
 import getFiteredData from '../store/thunks/getFiteredData'
+import simpleDebounce from './simpleDebounce'
+
+const debounce = simpleDebounce(TIME_ON_CHANGE_LOCATION)
+const getAds = () => store.dispatch(getFiteredData({}, undefined, true))
 
 export default (state, setState) => {
   const { center, zoom, ts } = storage.get()
@@ -33,7 +36,7 @@ export default (state, setState) => {
 
     if (stor.getState().loading) return
 
-    store.dispatch(getFiteredData({}, undefined, true))
+    debounce(getAds)
   })
 
   storage.set({
