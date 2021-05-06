@@ -4,6 +4,7 @@ export default {
     FLAT: 'Квартира',
     ROOMS: 'Комнат',
     PRICE: 'Цена',
+    TYPE: 'Тип жилья',
     FROM: 'От',
     TO: 'До',
     GUESTS: 'Гостей',

@@ -24,22 +24,21 @@ const onlyNumbs = (n) => {
 const messengers = {
   tg: {
     icon: tg,
-    link: 'https://telegram.me/',
+    link: 'tg://resolve?domain=',
     setLink(item) {
       return this.link + item.tgUser
     },
   },
   vb: {
     icon: vbr,
-    // link: 'viber://chat?number=%2B',
-    link: 'https://viber.click/',
+    link: 'viber://add?number=',
     setLink(phone) {
       return this.link + onlyNumbs(phone)
     },
   },
   wt: {
     icon: wts,
-    link: 'https://wapp.click/',
+    link: 'whatsapp://send?phone=',
     setLink(phone) {
       return this.link + onlyNumbs(phone)
     },
@@ -100,7 +99,7 @@ const Popup = ({ adsArray }) => {
             </div>
           </div>
           <div className="yaps-popup__row">
-            <a href={`${HOME}/${state.ad?.city.slug}/${state.ad?.id}`} target="_blank" className="yaps-popup__cell yaps-popup__cell-img">
+            <a href={`${HOME + state.ad?.city.slug}/${state.ad?.id}`} target="_blank" className="yaps-popup__cell yaps-popup__cell-img">
               <img className="yaps-popup__main-img" src={PHOTO_STORAGE_URL + state.ad?.photos[0].path} alt="" />
             </a>
             <div className="yaps-popup__cell descr">
@@ -128,7 +127,7 @@ const Popup = ({ adsArray }) => {
                 <span>{state.ad?.address}</span>
               </div>
 
-              <a className="yaps-popup__btn" href={`${HOME}/${state.ad?.city.slug}/${state.ad?.id}`} target="_blank">
+              <a className="yaps-popup__btn" href={`${HOME + state.ad?.city.slug}/${state.ad?.id}`} target="_blank">
                 Подробнее
               </a>
             </div>

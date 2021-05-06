@@ -16,7 +16,7 @@
   input {
     position: relative;
     height: 32px;
-    border: 1px solid #0000000d;
+    border: 1px solid #eee;
     padding: 0px 7px;
     border-radius: 4px;
     font-size: 12px;
@@ -112,13 +112,20 @@
   }
 
   &__type-select {
-    width: 100%;
+    width: 48%;
 
     .yaps__control {
-      border: none;
+      // border: none;
+      border-color: #eee;
+      height: 32px;
+      padding-left: 8px;
+      input {
+        height: 100%;
+      }
     }
     .yaps__value-container {
       padding-left: 0;
+      height: 100%;
     }
   }
 
@@ -128,6 +135,9 @@
       height: 32px;
       border-radius: 4px;
       margin-left: 8px;
+      font-family: Roboto, Roboto-Regular !important;
+      font-weight: 400 !important;
+      color: #454545;
 
       &:hover,
       &.active {
@@ -149,7 +159,7 @@
       &:nth-child(2) {
         border-top-left-radius: 0;
         border-bottom-left-radius: 0;
-        margin-left: -2px;
+        margin-left: -1px;
       }
     }
   }
@@ -186,6 +196,7 @@
 
   &__guests-input {
     width: 56px;
+    text-align: center;
     margin-left: auto;
   }
 }

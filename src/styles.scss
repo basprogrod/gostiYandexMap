@@ -24,10 +24,10 @@ button {
     font-weight: 500;
   }
   sup {
-    position: static;
+    position: relative;
     font-size: 8px !important;
     line-height: initial !important;
-    top: unset;
+    top: 0px;
   }
   button {
     font-family: Roboto, Roboto-Medium;

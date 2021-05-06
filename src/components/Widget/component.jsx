@@ -63,7 +63,9 @@ const Widget = ({ address, date, commonSquare, descr, price, currency, photos, i
           {photos.map((ph) => (
             <div key={ph.id}>
               <div className="yaps-widget__slide">
-                <img src={PHOTO_STORAGE_URL + ph.path} alt="" />
+                <a href={`${HOME + city.slug}/${id}`} target="_blank">
+                  <img src={PHOTO_STORAGE_URL + ph.path} alt="" />
+                </a>
               </div>
             </div>
           ))}
@@ -72,7 +74,7 @@ const Widget = ({ address, date, commonSquare, descr, price, currency, photos, i
         <div className="yaps-widget__fields">
           <div className="yaps-widget__field">
             <div className="yaps-widget__cell">
-              <a target="_blank" href={`${HOME}${city.slug}/${id}`}>
+              <a target="_blank" href={`${HOME + city.slug}/${id}`}>
                 {address}
               </a>
             </div>
@@ -108,7 +110,7 @@ const Widget = ({ address, date, commonSquare, descr, price, currency, photos, i
         <button className="yaps-widget__show-phone-btn" onClick={hendleOpenPopup}>
           <b>{dict.widget.BUTTON}</b>
         </button>
-        <a className="yaps-widget__show-phone-btn yaps-widget__show-phone-btn-o" href={`${HOME}${city.slug}/${id}`} target="_blank">
+        <a className="yaps-widget__show-phone-btn yaps-widget__show-phone-btn-o" href={`${HOME + city.slug}/${id}`} target="_blank">
           <b>{dict.widget.BUTTON_MORE}</b>
         </a>
       </div>

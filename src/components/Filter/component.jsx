@@ -100,10 +100,6 @@ const Filter = ({ map, handleShowCloseFilter, width }) => {
     setState({ ...state, [VISITORS]: +e.target.value })
   }
 
-  const handleCitiesSelectChange = (e) => {
-    setState((state) => ({ ...state, [CITY]: e.value }))
-  }
-
   const handleTypesSelectChange = (e) => {
     setState((state) => ({ ...state, [TYPE]: e.value }))
   }
@@ -122,19 +118,8 @@ const Filter = ({ map, handleShowCloseFilter, width }) => {
 
   return (
     <div className="yaps-filter">
-      {/* <div className="yaps-filter__field">
-        <div className="yaps-filter__field-title">{dict.filter.FLAT}</div>
-        <Select
-          className="yaps-filter__city-select yaps-filter__select"
-          classNamePrefix="yaps"
-          options={cities}
-          // defaultValue={}
-          theme={theme}
-          placeholder="Выберите город"
-          onChange={handleCitiesSelectChange}
-        />
-      </div> */}
       <div className="yaps-filter__field">
+        <div className="yaps-filter__field-title">{dict.filter.TYPE}</div>
         {!!types.length && <Select className="yaps-filter__type-select" classNamePrefix="yaps" options={types} theme={theme} defaultValue={types[0]} onChange={handleTypesSelectChange} />}
       </div>
       <div className="yaps-filter__field">

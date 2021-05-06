@@ -34,18 +34,23 @@
     }
   }
   .slick-prev {
-    left: 5px;
+    left: 9px;
     z-index: 1;
     .yasp-slider-arrow__left {
       transform: rotate(-180deg);
     }
   }
   .slick-next {
-    right: 15px;
+    right: 0px;
   }
   .slick-next,
   .slick-prev {
-    height: 30px;
+    height: 100%;
+    top: 0;
+    transform: translate(0, 0);
+    width: 40px;
+    display: flex !important;
+    align-items: center;
     .yasp-slider-arrow {
       max-width: initial;
     }
