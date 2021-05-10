@@ -26,16 +26,17 @@ const { CITY, TYPE, ROOM_NUMBER, FROM, TO, OPTIONS, VISITORS } = filterFields
 
 const Filter = ({ map, handleShowCloseFilter, width }) => {
   const dispatch = useDispatch()
-  const { options, cities, types, loading } = useSelector((state) => state)
+  const { options, types, loading } = useSelector((state) => state)
 
   const [state, setState] = useState({
-    [ROOM_NUMBER]: '', // TODO,
+    [ROOM_NUMBER]: '',
     [FROM]: '',
     [TO]: '',
-    [TYPE]: 'flat',
+    [TYPE]: { label: 'Квартира', value: 'flat' },
     [VISITORS]: 1,
     [OPTIONS]: [],
     [CITY]: '',
+    reset: 0,
   })
 
   const handleSelectChip = (value) => {
@@ -101,14 +102,29 @@ const Filter = ({ map, handleShowCloseFilter, width }) => {
   }
 
   const handleTypesSelectChange = (e) => {
-    setState((state) => ({ ...state, [TYPE]: e.value }))
+    setState((state) => ({ ...state, [TYPE]: e }))
   }
 
-  const handleSubmifFilter = () => {
+  const handleSubmitFilter = () => {
     if (loading) return
     if (width < SMALL_SREEN) handleShowCloseFilter()
     map.geoObjects.removeAll()
     dispatch(getFiteredData(state))
+  }
+
+  const handleClearFilter = () => {
+    if (loading) return
+    setState({
+      ...state,
+      reset: state.reset + 1,
+      [ROOM_NUMBER]: '',
+      [FROM]: '',
+      [TO]: '',
+      [TYPE]: { label: 'Квартира', value: 'flat' },
+      [VISITORS]: 1,
+      [OPTIONS]: [],
+      [CITY]: '',
+    })
   }
 
   Filter.apply = () => {
@@ -120,7 +136,9 @@ const Filter = ({ map, handleShowCloseFilter, width }) => {
     <div className="yaps-filter">
       <div className="yaps-filter__field">
         <div className="yaps-filter__field-title">{dict.filter.TYPE}</div>
-        {!!types.length && <Select className="yaps-filter__type-select" classNamePrefix="yaps" options={types} theme={theme} defaultValue={types[0]} onChange={handleTypesSelectChange} />}
+        {!!types.length && (
+          <Select key={state.reset} className="yaps-filter__type-select" classNamePrefix="yaps" options={types} theme={theme} defaultValue={state[TYPE]} onChange={handleTypesSelectChange} />
+        )}
       </div>
       <div className="yaps-filter__field">
         <div className="yaps-filter__field-title">{dict.filter.ROOMS}</div>
@@ -161,7 +179,7 @@ const Filter = ({ map, handleShowCloseFilter, width }) => {
         </div>
       </div>
       <div className="yaps-filter__field yaps-filer__btn">
-        <button onClick={handleSubmifFilter}>
+        <button onClick={handleSubmitFilter}>
           {loading ? (
             <Loader />
           ) : (
@@ -169,6 +187,9 @@ const Filter = ({ map, handleShowCloseFilter, width }) => {
               <SearchIcon /> <span>{dict.filter.SEARCH}</span>
             </>
           )}
+        </button>
+        <button onClick={handleClearFilter}>
+          <span>{dict.filter.CLEAR}</span>
         </button>
       </div>
       <Dropdown options={options} onSelect={handleSelectChip} selectedOptions={state[OPTIONS]} unsetChips={handleUnsetChips} />

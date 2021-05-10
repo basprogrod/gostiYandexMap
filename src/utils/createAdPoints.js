@@ -84,7 +84,8 @@ export default (pointsArray, state, setState) => {
         .get('target')
         .getGeoObjects()
         .map((obj) => pointsArray[obj.properties._data.indexToShow])
-      setState({ ...state, adsToShow, isShowFilter: false, isLoading: false })
+      setState({ ...state, lastAds: state.adsToShow, adsToShow, isShowFilter: false, isLoading: false })
+      setTimeout(() => console.log('-> state', state), 500)
 
       e.get('target').options.set('iconLayout', 'default#image')
       e.get('target').options.set('iconImageHref', logo)
@@ -93,7 +94,7 @@ export default (pointsArray, state, setState) => {
     } else {
       const adsToShow = pointsArray[e.get('target').properties._data.indexToShow]
 
-      setState({ ...state, adsToShow: [adsToShow], isShowFilter: false, isLoading: false })
+      setState({ ...state, lastAds: state.adsToShow, adsToShow: [adsToShow], isShowFilter: false, isLoading: false })
     }
   })
   setState((state) => ({ ...state, cluster: clusterer, isShowFilter: false, isLoading: false }))

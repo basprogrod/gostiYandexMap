@@ -9,6 +9,7 @@ export default {
     TO: 'До',
     GUESTS: 'Гостей',
     SEARCH: 'Найти',
+    CLEAR: 'Сбросить',
     MORE_OPTIONS: 'Больше параметров',
     LESS_OPTIONS: 'Спрятать',
   },

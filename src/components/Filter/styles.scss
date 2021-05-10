@@ -45,7 +45,7 @@
       button {
         margin-top: auto;
         background-color: #19a24b;
-        width: 100%;
+        width: 48%;
         height: 40px;
         border-radius: 4px;
         display: flex;
@@ -54,6 +54,19 @@
         color: #fff;
         transition: all 0.3s;
         border: 1px solid #19a24b;
+
+        &:last-child {
+          background-color: #fff;
+          color: #19a24b;
+          span {
+            margin: 0;
+          }
+
+          &:hover {
+            background-color: #19a24b;
+            color: #fff;
+          }
+        }
 
         span {
           margin-left: 8px;
@@ -115,7 +128,6 @@
     width: 48%;
 
     .yaps__control {
-      // border: none;
       border-color: #eee;
       height: 32px;
       padding-left: 8px;

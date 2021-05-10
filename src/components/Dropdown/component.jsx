@@ -14,13 +14,7 @@ const chips = [
   {
     id: 'может и не быть id',
     type: 'Для досуга',
-    items: [
-      'name1',
-      'longname2',
-      'name with spaces2',
-      'longname3',
-      'name with spaces3',
-    ],
+    items: ['name1', 'longname2', 'name with spaces2', 'longname3', 'name with spaces3'],
   },
   // {
   //   id: 'может и не быть id',
@@ -54,10 +48,7 @@ const Dropdown = ({ options, onSelect, selectedOptions, unsetChips }) => {
 
   return (
     <div className="yaps-dropdown">
-      <ul
-        ref={listRef}
-        className={`yaps-dropdown__list ${state.isOpen ? 'active' : ''}`}
-      >
+      <ul ref={listRef} className={`yaps-dropdown__list ${state.isOpen ? 'active' : ''}`}>
         {options.map((item) => (
           <li key={item.id} className="yaps-dropdown__item">
             <span className="yaps-dropdown__item-title">{item.name}:</span>
@@ -67,15 +58,7 @@ const Dropdown = ({ options, onSelect, selectedOptions, unsetChips }) => {
                   onSelect(el.id)
                 }
                 return (
-                  <button
-                    key={index}
-                    className={`yaps-dropdown__chip ${
-                      selectedOptions.some((opt) => opt === el.id)
-                        ? 'active'
-                        : ''
-                    }`}
-                    onClick={handleClick}
-                  >
+                  <button key={index} className={`yaps-dropdown__chip ${selectedOptions?.some((opt) => opt === el.id) ? 'active' : ''}`} onClick={handleClick}>
                     <span>{el.name}</span>
                     <CrossIcon className="yaps-dropdown__chip-icon" />
                   </button>
@@ -86,13 +69,8 @@ const Dropdown = ({ options, onSelect, selectedOptions, unsetChips }) => {
         ))}
       </ul>
 
-      <button
-        className={`yaps-dropdown__open-btn ${state.isOpen ? 'active' : ''}`}
-        onClick={handleOpen}
-      >
-        <span>
-          {state.isOpen ? dict.filter.LESS_OPTIONS : dict.filter.MORE_OPTIONS}
-        </span>
+      <button className={`yaps-dropdown__open-btn ${state.isOpen ? 'active' : ''}`} onClick={handleOpen}>
+        <span>{state.isOpen ? dict.filter.LESS_OPTIONS : dict.filter.MORE_OPTIONS}</span>
         <Arrow />
       </button>
     </div>

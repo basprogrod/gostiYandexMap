@@ -30,7 +30,9 @@ const App = () => {
     map: null,
     isLoading: true,
     adsToShow: [],
+    lastAds: [],
     prevCenter: [],
+    favoriteList: [],
     cluster: undefined,
     isShowFilter: false,
   })
@@ -40,6 +42,8 @@ const App = () => {
 
   const init = () => {
     onGetPosition(state, setState)
+    const favInput = document.getElementById('favoriteList')
+    if (favInput) setState((state) => ({ ...state, favoriteList: favInput.value.split(',') }))
   }
 
   const handleBackToFilters = () => {
@@ -108,7 +112,7 @@ const App = () => {
       )}
       <Controls handleShowCloseFilter={handleShowCloseFilter} isShowFilter={state.isShowFilter} width={width} />
       {width > SMALL_SREEN ? (
-        <Sidebar width={width} handleBackToFilters={handleBackToFilters} adsArray={state.adsToShow} map={state.map} />
+        <Sidebar favoriteList={state.favoriteList} width={width} handleBackToFilters={handleBackToFilters} adsArray={state.adsToShow} map={state.map} />
       ) : (
         !!state.adsToShow.length &&
         !state.isShowFilter && (
@@ -126,6 +130,7 @@ const App = () => {
                 price={ad.price?.daily}
                 currency={ad.price?.currency}
                 photos={ad.photos}
+                fav={state.favoriteList.some((el) => el == ad.id)}
               />
             ))}
           </div>

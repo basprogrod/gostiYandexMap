@@ -9,7 +9,7 @@ import Widget from '../Widget'
 
 import './styles.scss'
 
-const Sidebar = ({ adsArray, handleBackToFilters, map, width }) => {
+const Sidebar = ({ adsArray, handleBackToFilters, map, width, favoriteList }) => {
   const { adsType, adsCount } = useSelector((state) => state)
 
   const [state, setState] = useState({
@@ -69,6 +69,7 @@ const Sidebar = ({ adsArray, handleBackToFilters, map, width }) => {
               price={ad.price?.daily}
               currency={ad.price?.currency}
               photos={ad.photos}
+              fav={favoriteList.some((el) => el == ad.id)}
             />
           ))}
         </div>
